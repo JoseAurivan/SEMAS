@@ -9,6 +9,10 @@ EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F919A9AB-DC3C-4E1A-8BBA-7B6D3D238A5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{33A78C06-1DDF-4555-BD1E-D2A84585968E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{F5809026-A5C7-4A81-AE63-523C79EEE4A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +23,17 @@ Global
 		{99748D28-C78B-47D6-AF69-7E7B6E4CC407}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99748D28-C78B-47D6-AF69-7E7B6E4CC407}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99748D28-C78B-47D6-AF69-7E7B6E4CC407}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A78C06-1DDF-4555-BD1E-D2A84585968E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A78C06-1DDF-4555-BD1E-D2A84585968E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A78C06-1DDF-4555-BD1E-D2A84585968E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A78C06-1DDF-4555-BD1E-D2A84585968E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5809026-A5C7-4A81-AE63-523C79EEE4A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5809026-A5C7-4A81-AE63-523C79EEE4A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5809026-A5C7-4A81-AE63-523C79EEE4A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5809026-A5C7-4A81-AE63-523C79EEE4A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33A78C06-1DDF-4555-BD1E-D2A84585968E} = {F919A9AB-DC3C-4E1A-8BBA-7B6D3D238A5C}
+		{F5809026-A5C7-4A81-AE63-523C79EEE4A2} = {F919A9AB-DC3C-4E1A-8BBA-7B6D3D238A5C}
 	EndGlobalSection
 EndGlobal
