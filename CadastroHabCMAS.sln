@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadastroHabCMAS", "CadastroHabCMAS\CadastroHabCMAS.csproj", "{99748D28-C78B-47D6-AF69-7E7B6E4CC407}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{B67A3C24-FD25-48AA-B5A2-E609B627756B}"
+ProjectSection(SolutionItems) = preProject
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F919A9AB-DC3C-4E1A-8BBA-7B6D3D238A5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99748D28-C78B-47D6-AF69-7E7B6E4CC407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99748D28-C78B-47D6-AF69-7E7B6E4CC407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99748D28-C78B-47D6-AF69-7E7B6E4CC407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99748D28-C78B-47D6-AF69-7E7B6E4CC407}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
