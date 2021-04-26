@@ -1,6 +1,8 @@
-﻿namespace Domain.Models
+﻿using Domain.Interfaces;
+
+namespace Domain.Models
 {
-    public class CestaBasica
+    public class CestaBasica:IModelBase
     {
 
         public int Id { get; set; }

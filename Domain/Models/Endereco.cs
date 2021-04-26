@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Domain.Interfaces;
 
 namespace Domain.Models
 {
-    public class Endereco
+    public class Endereco:IModelBase
     {
         public Endereco()
         {

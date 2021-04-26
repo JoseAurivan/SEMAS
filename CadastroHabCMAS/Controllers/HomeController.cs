@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CadastroHabCMAS.Models;
+using Services.Repositories;
+using Services.Services.Interfaces;
 
 namespace CadastroHabCMAS.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IUserService _userService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUserService userService, IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _userService = userService;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()

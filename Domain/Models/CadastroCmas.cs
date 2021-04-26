@@ -1,6 +1,8 @@
-﻿namespace Domain.Models
+﻿using Domain.Interfaces;
+
+namespace Domain.Models
 {
-    public class CadastroCmas
+    public class CadastroCmas:IModelBase
     {
         
         public Pessoa Pessoa { get; set; }

@@ -1,6 +1,8 @@
-﻿namespace Domain.Models
+﻿using Domain.Interfaces;
+
+namespace Domain.Models
 {
-    public class User
+    public class User:IModelBase
     {
         public int Id { get; set; }
         public string Username { get; set; }

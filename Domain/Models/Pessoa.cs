@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using Domain.Enums;
+using Domain.Interfaces;
 
 namespace Domain.Models
 {
     
-    public class Pessoa
+    public class Pessoa:IModelBase
     {
         public Pessoa()
         {
