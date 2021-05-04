@@ -44,5 +44,36 @@ namespace Services.Services
                 };
             }
         }
+
+        public  async Task<IServiceResult> Save(User user)
+        {
+            try
+            {
+                if (user is null)
+                {
+                    return new FailResult()
+                    {
+                        Errors = new[]
+                        {
+                            "Erro ao criar usuário"
+                        }
+                    };
+                }
+                _repository.Save(user);
+                return new SuccessResult<int>
+                {
+                    Result = user.Id
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new FailResult
+                {
+                    Errors = new []{ "Erro ao fazer Login"}
+                };
+            }
+            
+        }
     }
 }

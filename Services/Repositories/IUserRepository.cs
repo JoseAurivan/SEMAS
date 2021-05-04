@@ -8,5 +8,6 @@ namespace Services.Repositories
         Task<bool> CheckOldPassword(string oldPassword, int id);
 
         Task<User> LoginAsync(string username, string password);
+
     }
 }

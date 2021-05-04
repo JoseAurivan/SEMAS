@@ -9,4 +9,12 @@
       <ProjectReference Include="..\Database\Database.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\Prefeitura\04_Logomarca_Pref_Porto_Final_Horizontal_Em PNG (2).png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="jQuery" Version="3.6.0" />
+    </ItemGroup>
+
 </Project>

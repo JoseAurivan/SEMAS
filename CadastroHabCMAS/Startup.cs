@@ -26,7 +26,6 @@ namespace CadastroHabCMAS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
             services
                 .AddDatabaseContext()
                 .AddRepositories()

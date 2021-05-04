@@ -7,5 +7,6 @@ namespace Services.Services.Interfaces
     public interface IUserService
     {
         Task<IServiceResult> LoginAsync(string username, string password);
+        Task<IServiceResult> Save(User user);
     }
 }
