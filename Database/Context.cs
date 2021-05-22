@@ -1,10 +1,12 @@
-﻿using Database.FluentAPIConfiguration;
+﻿using System.Threading.Tasks;
+using Application;
+using Database.FluentAPIConfiguration;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
-    public class Context:DbContext
+    public class Context:DbContext, IContext
     {
         public Context()
         {
@@ -20,14 +22,16 @@ namespace Database
         public DbSet<CestaBasica> CestaBasicas { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<CadastroCmas> Cadastros { get; set; }
-        
+        public Task SaveChangesAsync() => SaveChangesAsync(default);
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            modelBuilder.ApplyConfiguration(new UserConfiguration());
            modelBuilder.ApplyConfiguration(new PessoaConfiguration());
            modelBuilder.ApplyConfiguration(new EnderecoConfiguration());
-           modelBuilder.ApplyConfiguration(new CadastroCMASConfiguration());
+           modelBuilder.ApplyConfiguration(new CadastroCmasConfiguration());
            modelBuilder.ApplyConfiguration(new CestaBasicaConfiguration());
+           modelBuilder.ApplyConfiguration(new PessoaEnderecoConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

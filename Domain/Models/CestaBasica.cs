@@ -6,10 +6,11 @@ namespace Domain.Models
     {
 
         public int Id { get; set; }
-        public string prxEntrega { get; set; }
-        public int quant { get; set; }
-        public bool status { get; set; }
-        public string statusDesc { get; set; }
+        public string PrxEntrega { get; set; }
+        public int Quant { get; set; }
+        public bool Status { get; set; }
+        public string NumeroMeses { get; set; }
+        
          
     }
 }

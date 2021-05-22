@@ -8,7 +8,14 @@ namespace Database.FluentAPIConfiguration
     {
         public void Configure(EntityTypeBuilder<Pessoa> builder)
         {
-            builder.ToTable("pessoa");
+            builder
+                .ToTable("pessoa")
+                .HasIndex(p => p.Cpf)
+                .IsUnique();
+            builder
+                .Property(p => p.Cpf)
+                .IsRequired();
+
         }
     }
 }

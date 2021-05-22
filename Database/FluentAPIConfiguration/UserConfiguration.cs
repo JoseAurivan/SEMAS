@@ -16,6 +16,14 @@ namespace Database.FluentAPIConfiguration
             modelBuilder
                 .Property(x => x.Username)
                 .IsRequired();
+
+            modelBuilder
+                .HasIndex(x => x.Email)
+                .IsUnique();
+            
+            modelBuilder
+                .Property(x => x.Email)
+                .IsRequired();
         }
     }
 }

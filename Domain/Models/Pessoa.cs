@@ -9,7 +9,7 @@ namespace Domain.Models
     {
         public Pessoa()
         {
-            Enderecos = new List<Endereco>();
+            Enderecos = new List<PessoaEndereco>();
         }
 
         public int Id { get; set; }
@@ -20,7 +20,7 @@ namespace Domain.Models
         public string Email { get; set; }
 
         public Sexo Sexo { get; set; }
-        public virtual ICollection<Endereco> Enderecos { get; set; }
+        public virtual ICollection<PessoaEndereco> Enderecos { get; set; }
 
         public override bool Equals(object obj)
         {

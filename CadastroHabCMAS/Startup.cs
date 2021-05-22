@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application;
 using Database;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,9 +30,10 @@ namespace CadastroHabCMAS
             services.AddControllersWithViews();
             services
                 .AddDatabaseContext()
-                .AddRepositories()
-                .AddUnitOfWork()
                 .AddServices();
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => options.LoginPath = "/login");
 
         }
 
@@ -53,8 +56,11 @@ namespace CadastroHabCMAS
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            
             app.UseAuthorization();
-
+            
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -4,11 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Database.FluentAPIConfiguration
 {
-    public class CadastroCMASConfiguration:IEntityTypeConfiguration<CadastroCmas>
+    public class CadastroCmasConfiguration:IEntityTypeConfiguration<CadastroCmas>
     {
         public void Configure(EntityTypeBuilder<CadastroCmas> builder)
         {
-            builder.ToTable("cadastroCMAS");
+            builder.ToTable("cadastroCMAS")
+                .HasIndex(c=>c.Nis)
+                .IsUnique();
+            builder.Property(c => c.Nis)
+                .IsRequired();
         }
     }
 }
