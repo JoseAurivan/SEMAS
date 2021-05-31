@@ -4,7 +4,7 @@ using Domain.Interfaces;
 
 namespace Domain.Models
 {
-    
+
     public class Pessoa:IModelBase
     {
         public Pessoa()

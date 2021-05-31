@@ -20,10 +20,11 @@ namespace CadastroHabCMAS.Controllers
     public class HomeController : CustomControllerBase
     {
         private readonly IUserService _userService;
-
-        public HomeController(IUserService userService)
+        private readonly IEmailService _emailService;
+        public HomeController(IUserService userService, IEmailService emailService)
         {
             _userService = userService;
+            _emailService = emailService;
         }
 
         public async Task<IActionResult> Index()
@@ -55,28 +56,8 @@ namespace CadastroHabCMAS.Controllers
                 return View(userEsqueciViewModel);
             }
 
-            var result = await _userService.FindEmailAsync(userEsqueciViewModel.Email);
-
+            var result = await _emailService.SendForgottenPasswordAsync(userEsqueciViewModel.Email);
             if (result.Type != ServiceResultType.Success) return LidarComErro(result, userEsqueciViewModel);
-            //TODO Fazer EmailService
-
-            MailMessage email = new MailMessage();
-            email.From = new MailAddress("suporteti.portonacional@gmail.com");
-            email.To.Add(new MailAddress(userEsqueciViewModel.Email));
-            email.Subject = "Recuperação de Senha";
-
-
-            email.Body = "ALOOOOOOOOOOo";
-            email.IsBodyHtml = true;
-            email.Priority = MailPriority.High;
-
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.EnableSsl = true;
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("suporteti.portonacional@gmail.com", "suporte@2021");
-
-            smtpClient.Send(email);
             return View(nameof(Index));
         }
 

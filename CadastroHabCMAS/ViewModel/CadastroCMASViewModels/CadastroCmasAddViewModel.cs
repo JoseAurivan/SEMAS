@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CadastroHabCMAS.Views.PessoaEndereco;
 
 namespace CadastroHabCMAS.ViewModel.CadastroCMASViewModels
 {
-    public class CadastroCmasAddViewModel
+    public class CadastroCmasAddViewModel : BaseViewModel
     {
         [Required]
         public string Nis { get; set; }

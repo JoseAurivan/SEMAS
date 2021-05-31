@@ -25,14 +25,13 @@ namespace Application.Services
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username && x.Password == password);
-                if (user is null) return new ServiceResult
+                
+                if (user is null) return new ServiceResult(ServiceResultType.NotFound)
                 {
-                    Type = ServiceResultType.NotFound,
                     Messages = new []{ "Usuário não encontrado"}
                 };
-                return new ServiceResult<int>
+                return new ServiceResult<int>(ServiceResultType.Success)
                 {
-                    Type = ServiceResultType.Success,
                     Result = user.Id
                 };
 
@@ -40,9 +39,8 @@ namespace Application.Services
             catch (Exception e)
             {
                 _logger.LogError(e, nameof(UserService));
-                return new ServiceResult
+                return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Type = ServiceResultType.InternalError,
                     Messages = new []{ "Erro ao fazer Login"}
                 };
             }
@@ -57,9 +55,8 @@ namespace Application.Services
             catch (Exception e)
             {
                 _logger.LogError(e, nameof(UserService));
-                return new ServiceResult
+                return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Type = ServiceResultType.InternalError,
                     Messages = new []{ "Erro ao fazer Login"}
                 };
             }
@@ -70,9 +67,8 @@ namespace Application.Services
         {
             if (user is null)
             {
-                return new ServiceResult
+                return new ServiceResult(ServiceResultType.NotFound)
                 {
-                    Type = ServiceResultType.NotFound,
                     Messages = new[]
                     {
                         "Erro ao criar usuário"
@@ -85,9 +81,8 @@ namespace Application.Services
 
             await _context.SaveChangesAsync();
 
-            return new ServiceResult<int>
+            return new ServiceResult<int>(ServiceResultType.Success)
             {
-                Type = ServiceResultType.Success,
                 Result = user.Id
             };
         }
@@ -99,24 +94,21 @@ namespace Application.Services
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
                 if (user is null)
                 {
-                    return new ServiceResult
+                    return new ServiceResult(ServiceResultType.NotFound)
                     {
-                        Type = ServiceResultType.NotFound,
                         Messages = new[] {"Usuário não encontrado"}
                     };
                 }
-                return new ServiceResult<int>
+                return new ServiceResult<int>(ServiceResultType.Success)
                 {
-                    Type = ServiceResultType.Success,
                     Result = user.Id
                 };
             }
             catch (Exception e)
             {
                 _logger.LogError(e, nameof(UserService));
-                return new ServiceResult
+                return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Type = ServiceResultType.InternalError,
                     Messages = new []{"Email nao cadastrado"}
                 };
             }

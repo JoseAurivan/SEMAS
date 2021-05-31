@@ -8,7 +8,7 @@ namespace CadastroHabCMAS.Base
     public abstract class CustomControllerBase : Controller
     {
 
-        public IActionResult LidarComErro(ServiceResult resultado, object viewModel, [CallerMemberName] string nomeView = null )
+        public IActionResult LidarComErro(ServiceResult resultado, object viewModel = null, [CallerMemberName] string nomeView = null )
         {
             foreach (var mensagens in resultado.Messages)
             {

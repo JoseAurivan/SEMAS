@@ -8,7 +8,11 @@ namespace Application
     {
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IUserService, UserService>();
+            serviceCollection
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<IEmailService, EmailService>()
+                .AddScoped<IPessoaEnderecoService, PessoaEnderecoService>();
+            
             return serviceCollection;
         }
     }

@@ -1,0 +1,46 @@
+﻿
+@model CadastroHabCMAS.ViewModel.EnderecoViewModels.EnderecoAddViewModel
+
+@{
+    Layout = null;
+}
+<form asp-action="PV_EnderecosAdd" method="post">
+    <p class="lead">Adicione um Endereco</p>
+    <input type="text" asp-for="Id" value="@Model.Pessoa.Id" >
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Estado:</label>
+            <input type="text" asp-for="Estado"class="form-control" id="validationTooltip01" required placeholder="Nome do Estado" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Cidade:</label>
+            <input type="text"  asp-for="Cidade"class="form-control" id="validationTooltip01" required placeholder="Nome da Cidade" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationTooltip01">Complemento:</label>
+            <input type="text"  asp-for="Complemento"class="form-control" id="validationTooltip01" required placeholder="Complemento" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Bairro:</label>
+            <input type="text" asp-for="Bairro"class="form-control" id="validationTooltip01" required placeholder="Nome do Bairro" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationTooltip01">CEP:</label>
+            <input type="text" asp-for="Cep" class="form-control"  id="validationTooltip01" required placeholder="CEP" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label>Tipo de Endereço:</label>
+            <select  asp-for="TipoEndereco "class="form-select" aria-label="Default select example">
+                <option value="Imóvel">Imovel</option>
+                <option value="Correspondencia">Correspondencia</option>
+            </select>
+        </div>
+    </div>
+            <button class="btn  btn-outline-success" type="submit">Enviar</button>
+            <button class="btn  btn-outline-warning" type="reset">Limpar</button>
+    </form>
+        

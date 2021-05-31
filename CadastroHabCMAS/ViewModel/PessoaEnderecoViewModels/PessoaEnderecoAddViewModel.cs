@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CadastroHabCMAS.Views.PessoaEndereco;
 using Domain.Enums;
 using Domain.Models;
 
 namespace CadastroHabCMAS.ViewModel.PessoaEnderecoViewModel
 {
-    public class PessoaEnderecoAddViewModel
+    public class PessoaEnderecoAddViewModel : BaseViewModel
     {
         [Required(ErrorMessage = "Campo NOME é obrigatorio")]
         public string Nome { get; set; }

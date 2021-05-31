@@ -22,6 +22,7 @@ namespace Database
         public DbSet<CestaBasica> CestaBasicas { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<CadastroCmas> Cadastros { get; set; }
+        public DbSet<PessoaEndereco> PessoaEnderecos { get; set; }
         public Task SaveChangesAsync() => SaveChangesAsync(default);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

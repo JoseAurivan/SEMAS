@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CadastroHabCMAS.Views.PessoaEndereco;
 
 namespace CadastroHabCMAS.ViewModel.CestasBasicasViewModels
 {
-    public class AddCestaBasicaViewModel
+    public class AddCestaBasicaViewModel : BaseViewModel
     {
         [Required]
         public int Quant { get; set; }

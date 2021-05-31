@@ -1,0 +1,44 @@
+﻿
+@model CadastroHabCMAS.ViewModel.EnderecoViewModels.EnderecoAlterarViewModel
+
+@{
+    Layout = null;
+    //TODO for each com os enderecos
+}
+
+<p class="lead">Altere o Endereco</p>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Estado:</label>
+            <input type="text" class="form-control" id="validationTooltip01" required placeholder="Nome do Estado" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Cidade:</label>
+            <input type="text"  class="form-control" id="validationTooltip01" required placeholder="Nome da Cidade" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationTooltip01">Complemento:</label>
+            <input type="text"  class="form-control" id="validationTooltip01" required placeholder="Complemento" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Bairro:</label>
+            <input type="text" class="form-control" id="validationTooltip01" required placeholder="Nome do Bairro" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="validationTooltip01">CEP:</label>
+            <input type="text" class="form-control"  id="validationTooltip01" required placeholder="CEP" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label>Tipo de Endereço:</label>
+            <select  class="form-select" aria-label="Default select example">
+                <option value="Imovel">Imovel</option>
+                <option value="Correspondencia">Correspondencia</option>
+            </select>
+        </div>
+    </div>
+
+        

@@ -10,7 +10,8 @@ namespace Database.FluentAPIConfiguration
         {
             builder
                 .ToTable("PessoaEndereco")
-                .HasKey(c => new {c.IdPessoa, c.IdEndereco});
+                .HasKey(c => new {IdPessoa = c.PessoaId, IdEndereco = c.EnderecoId});
+
         }
     }
 }
