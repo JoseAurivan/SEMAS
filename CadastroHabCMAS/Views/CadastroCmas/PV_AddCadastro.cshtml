@@ -1,0 +1,59 @@
+﻿@model CadastroHabCMAS.ViewModel.CadastroCMASViewModels.CadastroCmasAddViewModel
+
+<form asp-action="PV_AddCadastro" method="post">
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">NIS:</label>
+            <input asp-for="Nis" type="text" class="form-control" id="validationTooltip01" required placeholder="NIS" required>
+            <input asp-for="Id"  type="text" class="form-control" id="validationTooltip01" required value="@Model.Id" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Família passando por insegurança:</label>
+            <select class="form-select" asp-for="Inseguranca">
+                <option value="true">Sim</option>
+                <option value="false">Nao</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Residência:</label>
+            <select class="form-select" asp-for="Residencia">
+                <option value="Propria">Própria</option>
+                <option value="Alugada">Alugada</option>
+                <option value="Cedida">Cedida</option>
+            </select>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Localidade:</label>
+            <select class="form-select" asp-for="Localidade">
+                <option value="Urbana">Urbana</option>
+                <option value="Rural">Rural</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-2 mb-3">
+            <label for="validationTooltip01">Beneficio:</label>
+            <select class="form-select" asp-for="Beneficio">
+                <option value="true">Sim</option>
+                <option value="false">Nao</option>
+            </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationTooltip01">Familia:</label>
+            <input asp-for="Familia" type="text" class="form-control" id="validationTooltip01" required placeholder="Familia" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-2 mb-3">
+            <label for="validationTooltip01">Sanitização:</label>
+            <select class="form-select" asp-for="Sanitizacao">
+                <option value="true">Sim</option>
+                <option value="false">Nao</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn  btn-outline-success" type="submit">Enviar</button>
+    <button class="btn  btn-outline-warning" type="reset">Limpar</button>
+</form>

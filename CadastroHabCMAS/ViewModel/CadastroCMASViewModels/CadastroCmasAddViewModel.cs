@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CadastroHabCMAS.Views.PessoaEndereco;
+using Domain.Models;
 
 namespace CadastroHabCMAS.ViewModel.CadastroCMASViewModels
 {
@@ -19,5 +20,23 @@ namespace CadastroHabCMAS.ViewModel.CadastroCMASViewModels
         public string Familia { get; set; }
         [Required]
         public bool Sanitizacao { get; set; }
+        [Required]
+        public int Id { get; set; }
+
+        public CadastroCmas ToModel(string nis, bool inseguranca, string residencia, string localidade, bool beneficio,
+            string familia, bool sanitizacao)
+        {
+            return new CadastroCmas()
+            {
+                Nis = nis,
+                Inseguranca = inseguranca,
+                Residencia = residencia,
+                Localidade = localidade,
+                Beneficio = beneficio,
+                Familia = familia,
+                Sanitizacao = sanitizacao
+
+            };
+        }
     }
 }
