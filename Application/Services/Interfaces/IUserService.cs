@@ -8,7 +8,7 @@ namespace Application.Services.Interfaces
     {
         Task<ServiceResult> LoginAsync(string username, string password);
         Task<ServiceResult> Save(User user);
-
+        Task<ServiceResult> FindCpfAsync(string username);
         Task<ServiceResult> FindEmailAsync(string email);
     }
 }

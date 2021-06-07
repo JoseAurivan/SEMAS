@@ -11,9 +11,11 @@ using CadastroHabCMAS.Base;
 using Microsoft.AspNetCore.Mvc;
 using CadastroHabCMAS.Models;
 using CadastroHabCMAS.ViewModel.UserViewModel;
+using Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Services.DataStructures;
 
 namespace CadastroHabCMAS.Controllers
 {
@@ -109,19 +111,25 @@ namespace CadastroHabCMAS.Controllers
         }
 
         [Authorize]
-        public IActionResult MyPage()
+        public async Task<IActionResult> MyPage()
         {
-            UserLoginViewModel userLoginViewModel = new UserLoginViewModel();
+            UserMyPageViewModel userLoginViewModel = new UserMyPageViewModel();
             var identity = (ClaimsIdentity) User.Identity;
             if (identity != null)
             {
                 var name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value)
                     .SingleOrDefault();
-                var password = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value)
-                    .SingleOrDefault();
 
-                userLoginViewModel.Username = name;
-                userLoginViewModel.Password = password;
+                var result = await _userService.FindCpfAsync(name);
+                if (result is ServiceResult<User> resultado && resultado.Type == ServiceResultType.Success)
+                {
+                    var user = resultado.Result;
+                    userLoginViewModel.Cpf = user.Username;
+                    userLoginViewModel.Senha = user.Password;
+                    userLoginViewModel.Matricula = user.Matricula;
+                    userLoginViewModel.Email = user.Email;
+                }
+
             }
 
 
@@ -132,6 +140,16 @@ namespace CadastroHabCMAS.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        }
+
+        public IActionResult MudarSenha()
+        {
+            return View();
+        }
+
+        public IActionResult MudarEmail()
+        {
+            return View();
         }
     }
 }

@@ -9,11 +9,11 @@ using Services.DataStructures;
 
 namespace Application.Services
 {
-    internal class UserService:IUserService
+    internal class UserService : IUserService
     {
         private readonly IContext _context;
         private readonly ILogger<UserService> _logger;
-        
+
         public UserService(IContext context, ILogger<UserService> logger)
         {
             _context = context;
@@ -24,12 +24,14 @@ namespace Application.Services
         {
             try
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username && x.Password == password);
-                
-                if (user is null) return new ServiceResult(ServiceResultType.NotFound)
-                {
-                    Messages = new []{ "Usuário não encontrado"}
-                };
+                var user = await _context.Users.FirstOrDefaultAsync(x =>
+                    x.Username == username && x.Password == password);
+
+                if (user is null)
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[] {"Usuário não encontrado"}
+                    };
                 return new ServiceResult<int>(ServiceResultType.Success)
                 {
                     Result = user.Id
@@ -41,7 +43,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new []{ "Erro ao fazer Login"}
+                    Messages = new[] {"Erro ao fazer Login"}
                 };
             }
         }
@@ -57,11 +59,12 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new []{ "Erro ao fazer Login"}
+                    Messages = new[] {"Erro ao fazer Login"}
                 };
             }
-            
+
         }
+        
 
         private async Task<ServiceResult> TrySaveUser(User user)
         {
@@ -99,6 +102,7 @@ namespace Application.Services
                         Messages = new[] {"Usuário não encontrado"}
                     };
                 }
+
                 return new ServiceResult<int>(ServiceResultType.Success)
                 {
                     Result = user.Id
@@ -109,11 +113,38 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new []{"Email nao cadastrado"}
+                    Messages = new[] {"Email nao cadastrado"}
                 };
             }
-            
+
         }
-        
+
+        public async Task<ServiceResult> FindCpfAsync(string username)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+                if (user is null)
+                {
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[] {"Usuário não encontrado"}
+                    };
+                }
+
+                return new ServiceResult<User>(ServiceResultType.Success)
+                {
+                    Result = user
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] {"CPF nao cadastrado"}
+                };
+            }
+        }
     }
 }
