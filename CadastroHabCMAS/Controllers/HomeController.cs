@@ -23,6 +23,7 @@ namespace CadastroHabCMAS.Controllers
     {
         private readonly IUserService _userService;
         private readonly IEmailService _emailService;
+
         public HomeController(IUserService userService, IEmailService emailService)
         {
             _userService = userService;
@@ -86,7 +87,8 @@ namespace CadastroHabCMAS.Controllers
             }
 
             var result = await _userService.LoginAsync(userLoginViewModel.Username, userLoginViewModel.Password);
-            if (result.Type != ServiceResultType.Success) return LidarComErro(result, userLoginViewModel, nameof(Index));
+            if (result.Type != ServiceResultType.Success)
+                return LidarComErro(result, userLoginViewModel, nameof(Index));
 
             //TODO remodelar esse sistema
 
@@ -113,7 +115,7 @@ namespace CadastroHabCMAS.Controllers
         [Authorize]
         public async Task<IActionResult> MyPage()
         {
-            UserMyPageViewModel userLoginViewModel = new UserMyPageViewModel();
+            UserMyPageViewModel userMyPageViewModel = new UserMyPageViewModel();
             var identity = (ClaimsIdentity) User.Identity;
             if (identity != null)
             {
@@ -124,16 +126,16 @@ namespace CadastroHabCMAS.Controllers
                 if (result is ServiceResult<User> resultado && resultado.Type == ServiceResultType.Success)
                 {
                     var user = resultado.Result;
-                    userLoginViewModel.Cpf = user.Username;
-                    userLoginViewModel.Senha = user.Password;
-                    userLoginViewModel.Matricula = user.Matricula;
-                    userLoginViewModel.Email = user.Email;
+                    userMyPageViewModel.Cpf = user.Username;
+                    userMyPageViewModel.Senha = user.Password;
+                    userMyPageViewModel.Matricula = user.Matricula;
+                    userMyPageViewModel.Email = user.Email;
+                    userMyPageViewModel.Id = user.Id;
                 }
-
             }
 
 
-            return View(userLoginViewModel);
+            return View(userMyPageViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -142,14 +144,98 @@ namespace CadastroHabCMAS.Controllers
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
 
-        public IActionResult MudarSenha()
+        [Authorize]
+        public async Task<IActionResult> MudarSenha()
         {
-            return View();
+            UserEditPasswordViewModel userEditPasswordViewModel = new UserEditPasswordViewModel();
+            var identity = (ClaimsIdentity) User.Identity;
+            if (identity != null)
+            {
+                var name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value)
+                    .SingleOrDefault();
+
+                var result = await _userService.FindCpfAsync(name);
+                if (result is ServiceResult<User> resultado && resultado.Type == ServiceResultType.Success)
+                {
+                    var user = resultado.Result;
+                    userEditPasswordViewModel.Id = user.Id;
+                }
+            }
+
+            return View(userEditPasswordViewModel);
         }
 
-        public IActionResult MudarEmail()
+
+        [HttpPost]
+        public async Task<IActionResult> MudarSenha(UserEditPasswordViewModel userEditPasswordViewModel)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var result = await _userService.CheckOldPasswordAsync(userEditPasswordViewModel.OldPassword,
+                userEditPasswordViewModel.Id);
+            if (result.Type == ServiceResultType.Success)
+            {
+                var task = await _userService.FindUserAsync(userEditPasswordViewModel.Id);
+                if (task is ServiceResult<User> resultado && resultado.Type == ServiceResultType.Success)
+                {
+                    var user = resultado.Result;
+                    user.Password = userEditPasswordViewModel.NewPassword;
+                    await _userService.Save(user);
+                    //TODO retornar feedback de sucesso
+                    return View(nameof(Panel));
+                }
+            }
+            
+            
+            //TODO tratar erros com mensagens amigáveis
+            return LidarComErro(result, userEditPasswordViewModel, nameof(MudarSenha));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> MudarEmail()
+        {
+            UserEditEmailViewModel userEditEmailViewModel = new UserEditEmailViewModel();
+            var identity = (ClaimsIdentity) User.Identity;
+            if (identity != null)
+            {
+                var name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value)
+                    .SingleOrDefault();
+
+                var result = await _userService.FindCpfAsync(name);
+                if (result is ServiceResult<User> resultado && resultado.Type == ServiceResultType.Success)
+                {
+                    var user = resultado.Result;
+                    userEditEmailViewModel.Id = user.Id;
+                }
+            }
+
+            return View(userEditEmailViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MudarEmail(UserEditEmailViewModel userEditEmailViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+
+            var task = await _userService.FindUserAsync(userEditEmailViewModel.Id);
+            if (task is ServiceResult<User> resultado && resultado.Type == ServiceResultType.Success)
+            {
+                var user = resultado.Result;
+                user.Email = userEditEmailViewModel.NewEmail;
+                await _userService.Save(user);
+                //TODO retornar feedback de sucesso
+                return View(nameof(Panel));
+            }
+
+            //TODO tratar erros com mensagens amigáveis
+            return LidarComErro(task, userEditEmailViewModel, nameof(MudarEmail));
         }
     }
 }

@@ -25,10 +25,11 @@
 <div class="form--cadastro">
     <p class="lead">Meu Perfil</p>
     <form class="needs-validation" novalidate>
+        <div asp-validation-summary="All"></div>
         <div class="form-row">
             <div class="col-md-4 mb-3">
                 <label for="validationTooltip01">Matricula:</label>
-                <input type="text" class="form-control" asp-for="Matricula" id="validationTooltip01" readonly >
+                <input type="text" class="form-control" asp-for="Matricula" id="validationTooltip01" readonly>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="validationTooltip02">CPF:</label>
@@ -42,10 +43,10 @@
             </div>
             <div class="col-md-4 mb-3">
                 <label for="validationTooltip04">Senha:</label>
-                <input type="password" class="form-control" id="validationTooltip04"  readonly asp-for="Senha">
+                <input type="password" class="form-control" id="validationTooltip04" readonly asp-for="Senha">
             </div>
         </div>
-        <button type="button" class="btn btn-outline-primary" asp-action="">Alterar Senha</button>
-        <button type="button" class="btn btn-outline-secondary" asp-action="">Alterar Email</button>
+        <a asp-action="MudarSenha" class="btn btn-primary">Mudar senha</a>
+        <a asp-action="MudarEmail" class="btn btn-primary">Mudar email</a>
     </form>
 </div>

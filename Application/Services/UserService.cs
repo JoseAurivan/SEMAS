@@ -119,6 +119,63 @@ namespace Application.Services
 
         }
 
+        public async Task<ServiceResult> CheckOldPasswordAsync(string oldPassword, int id)
+        {
+            try
+            {
+                var task = await _context.Users.AnyAsync(x => x.Password == oldPassword && x.Id == id);
+                if (task)
+                {
+                    return new ServiceResult<int>(ServiceResultType.Success)
+                    {
+                        Result = id
+                    };
+                }
+
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] {"Não foi possivel alterar a senha"}
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] {"Email nao cadastrado"}
+                };
+            }
+        }
+
+        public async Task<ServiceResult> FindUserAsync(int id)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+                if (user is null)
+                {
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[] {"Usuário não encontrado"}
+                    };
+                }
+
+                return new ServiceResult<User>(ServiceResultType.Success)
+                {
+                    Result = user
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] {"Usuario nao cadastrado"}
+                };
+            }
+
+        }
+
         public async Task<ServiceResult> FindCpfAsync(string username)
         {
             try

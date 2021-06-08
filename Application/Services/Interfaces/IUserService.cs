@@ -10,5 +10,7 @@ namespace Application.Services.Interfaces
         Task<ServiceResult> Save(User user);
         Task<ServiceResult> FindCpfAsync(string username);
         Task<ServiceResult> FindEmailAsync(string email);
+        Task<ServiceResult> CheckOldPasswordAsync(string oldPassword, int id);
+        Task<ServiceResult> FindUserAsync(int id);
     }
 }
