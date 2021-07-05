@@ -37,7 +37,7 @@
             <div class="col-md-3 mb-3">
                 <label for="validationTooltip01">CPF:</label>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="pessoaCPF" placeholder="CPF" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" id="cpf" placeholder="CPF" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <input type="text" class="form-control" id="typeOf" value="alterar" hidden>
                     <div class="input-group-append">
                         <a href="#">
@@ -65,13 +65,13 @@
         }
         
         $(document).ready(function() {
-          let url = "@Url.Action(nameof(PessoaEnderecoController.EncontrarCpf))";
+          let url = "@Url.Action(nameof(PessoaEnderecoCestaBasicaController.EncontrarCpf))";
           init(url);
         });
         
         function encontrarCPF() {
             console.log(urlPessoaEndereco)
-            let cpf = document.getElementById("pessoaCPF").value;
+            let cpf = document.getElementById("cpf").value;
             let typeOf = document.getElementById("typeOf").value;
             console.log(cpf)
             $.ajax({      

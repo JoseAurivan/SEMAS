@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Enums;
 using Application.Services.Interfaces;
@@ -31,7 +32,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Erro ao cadastrar pessoa"}
+                    Messages = new[] {"Erro ao cadastrar pessoa. CPF já cadastrado no sistema."}
                 };
             }
         }
@@ -132,6 +133,93 @@ namespace Application.Services
                     Messages = new[] {"Pessoa não cadastrada"}
                 };
             }
+        }
+
+        public async Task<ServiceResult> SaveCestaBasica(Endereco endereco, CestaBasica cestaBasica)
+        {
+            try
+            {
+                return await TrySaveCestaBasica( endereco, cestaBasica);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] {"Erro ao cadastrar pessoa"}
+                };
+            }
+        }
+
+        public async Task<ServiceResult> SearchForEndereco(int idPessoa)
+        {
+            try
+            {
+                var pessoaEndereco = await _context.PessoaEnderecos
+                    .Include(x =>x.Pessoa)
+                    .Include(x=>x.Endereco)
+                    .FirstOrDefaultAsync(x => x.PessoaId == idPessoa);
+                
+                if (pessoaEndereco is null)
+                {
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[]
+                        {
+                            "ID da pessoa não encontrada."
+                        }
+                    };
+                }
+
+                var endereco = await _context.Enderecos
+                    .Include(x => x.Pessoa)
+                    .FirstOrDefaultAsync(x => x.Pessoa.Contains(pessoaEndereco));
+                
+                if (endereco is null)
+                {
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[]
+                        {
+                            "ID do endereco não encontrado."
+                        }
+                    };
+                }
+
+                return new ServiceResult<Endereco>(ServiceResultType.Success)
+                {
+                    Result = endereco
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] {"Endereco não cadastrada"}
+                };
+            }
+        }
+
+        private async Task<ServiceResult> TrySaveCestaBasica( Endereco endereco, CestaBasica cestaBasica)
+        {
+            if ( endereco is null || cestaBasica is null)
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] {"Dados nulos"}
+                };
+
+            if (cestaBasica.Id == default) _context.CestaBasicas.Add(cestaBasica);
+            else _context.Entry(cestaBasica).State = EntityState.Modified;
+
+            endereco.Cesta = cestaBasica;
+            
+            _context.Entry(endereco).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return new ServiceResult<int>(ServiceResultType.Success)
+            {
+                Result = cestaBasica.Id
+            };
         }
     }
 }

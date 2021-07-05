@@ -1,0 +1,23 @@
+﻿
+@model CadastroHabCMAS.ViewModel.CestasBasicasViewModels.AddCestaBasicaViewModel
+
+@{
+    Layout = null;
+}
+<form asp-action="PV_CestaAdd" method="post">
+    <p class="lead">Adicione uma Cesta basica</p>
+    <input type="text" asp-for="IdPessoa" value="@Model.Pessoa.Id">
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Quantidade:</label>
+            <input type="number" asp-for="Quant" class="form-control" id="validationTooltip01" required  >
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Numero de Meses:</label>
+            <input type="number"  asp-for="NumeroMeses"class="form-control" id="validationTooltip01"  required>
+        </div>
+    </div>
+    <button class="btn  btn-outline-success" type="submit">Enviar</button>
+    <button class="btn  btn-outline-warning" type="reset">Limpar</button>
+    </form>
+        

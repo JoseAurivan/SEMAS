@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Enums;
 using Application.Services.Interfaces;
 using CadastroHabCMAS.Base;
+using CadastroHabCMAS.ViewModel.CestasBasicasViewModels;
 using CadastroHabCMAS.ViewModel.EnderecoViewModels;
 using CadastroHabCMAS.ViewModel.PessoaEnderecoViewModel;
 using CadastroHabCMAS.Views.PessoaEndereco;
@@ -14,12 +15,14 @@ using Services.DataStructures;
 
 namespace CadastroHabCMAS.Controllers
 {
-    public class PessoaEnderecoController : CustomControllerBase
+    public class PessoaEnderecoCestaBasicaController : CustomControllerBase
     {
         private readonly IPessoaEnderecoService _pessoaEnderecoService;
-        public PessoaEnderecoController(IPessoaEnderecoService pessoaEnderecoService)
+        private readonly ICadastroCmasService _cmasService;
+        public PessoaEnderecoCestaBasicaController(IPessoaEnderecoService pessoaEnderecoService, ICadastroCmasService cmasService)
         {
             _pessoaEnderecoService = pessoaEnderecoService;
+            _cmasService = cmasService;
         }
         public IActionResult Cadastro()
         {
@@ -38,8 +41,12 @@ namespace CadastroHabCMAS.Controllers
             var endereco = pessoaEndereco.ToModelEndereco(pessoaEndereco.Estado, pessoaEndereco.Cidade,
                 pessoaEndereco.Cep, pessoaEndereco.Bairro, pessoaEndereco.Complemento);
             
-            await _pessoaEnderecoService.SavePessoa(pessoa, endereco);
-            return View();
+            var result = await _pessoaEnderecoService.SavePessoa(pessoa, endereco);
+            if (result.Type is ServiceResultType.Success)
+            {
+                return View();
+            }
+            return LidarComErro(result, pessoaEndereco, nameof(Cadastro));
         }
 
         [HttpPost]
@@ -61,6 +68,14 @@ namespace CadastroHabCMAS.Controllers
                     EnderecoAddViewModel viewModel = new EnderecoAddViewModel();
                     viewModel.Pessoa = resultado.Result;
                     return PartialView(nameof(PV_EnderecosAdd),viewModel);
+                }
+
+                if (typeOf == "addCestaBasica")
+                {
+                    AddCestaBasicaViewModel viewModel = new AddCestaBasicaViewModel();
+                    viewModel.Pessoa = resultado.Result;
+                    return PartialView(nameof(PV_CestaAdd), viewModel);
+
                 }
 
             }
@@ -108,7 +123,7 @@ namespace CadastroHabCMAS.Controllers
             }
 
 
-            return LidarComErro(result, enderecoAddViewModel);
+            return LidarComErro(result, enderecoAddViewModel, nameof(Adicionar));
         }
 
         public IActionResult Alterar()
@@ -123,5 +138,39 @@ namespace CadastroHabCMAS.Controllers
             return View();
         }
         
+        public IActionResult Visualizar()
+        {
+            return View();
+        }
+        
+        public IActionResult AdicionarCestaBasica()
+        {
+            return View();
+        }
+
+        public IActionResult PV_CestaAdd()
+        {
+            return PartialView();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> PV_CestaAdd(AddCestaBasicaViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(PV_CestaAdd), viewModel);
+            }
+            
+            var result = await _pessoaEnderecoService.SearchForEndereco(viewModel.IdPessoa);
+            if (result is ServiceResult<Endereco> resultado && resultado.Type == ServiceResultType.Success)
+            {
+                var endereco = resultado.Result;
+                var cestaBasica = viewModel.ToModelCestaBasica(viewModel.NumeroMeses, viewModel.Quant);
+
+                await _pessoaEnderecoService.SaveCestaBasica(endereco, cestaBasica);
+                return View(nameof(AdicionarCestaBasica));
+            }
+            return LidarComErro(result,viewModel,nameof(AdicionarCestaBasica));
+        }
     }
 }

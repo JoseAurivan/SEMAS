@@ -8,6 +8,7 @@ namespace Database.FluentAPIConfiguration
     {
         public void Configure(EntityTypeBuilder<CadastroCmas> builder)
         {
+            //TODO mapear pelo Pessoa ID pra ser unico
             builder.ToTable("cadastroCMAS")
                 .HasIndex(c=>c.Nis)
                 .IsUnique();

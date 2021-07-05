@@ -74,8 +74,9 @@ namespace CadastroHabCMAS.Controllers
 
             var user = userCreateViewModel.GetModel(userCreateViewModel.Cpf, userCreateViewModel.Matricula,
                 userCreateViewModel.Senha, userCreateViewModel.Email);
-            await _userService.Save(user);
-            return View("CriarUser");
+            var result = await _userService.Save(user);
+            if(result.Type != ServiceResultType.Success) LidarComErro(result,userCreateViewModel);
+            return View(nameof(CriarUser));
         }
 
         [HttpPost("login")]

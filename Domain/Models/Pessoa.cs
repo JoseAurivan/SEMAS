@@ -19,6 +19,8 @@ namespace Domain.Models
         public string Telefone { get; set; }
         public string Email { get; set; }
 
+        
+
         public Sexo Sexo { get; set; }
         public virtual ICollection<PessoaEndereco> Enderecos { get; set; }
 
