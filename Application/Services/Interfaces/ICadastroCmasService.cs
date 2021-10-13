@@ -7,5 +7,7 @@ namespace Application.Services.Interfaces
     public interface ICadastroCmasService
     {
         Task<ServiceResult> SaveCadastro(Pessoa pessoa, CadastroCmas cadastroCmas);
+        Task<ServiceResult> FindCmas(Pessoa pessoa);
+        Task<ServiceResult> ListCadastro();
     }
 }

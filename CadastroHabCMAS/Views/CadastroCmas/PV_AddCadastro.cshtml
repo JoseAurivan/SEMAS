@@ -5,7 +5,7 @@
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">NIS:</label>
             <input asp-for="Nis" type="text" class="form-control" id="validationTooltip01" required placeholder="NIS" required>
-            <input asp-for="Id"  type="text" class="form-control" id="validationTooltip01" required value="@Model.Id" required>
+            <input asp-for="Id"  type="text" class="form-control" hidden readonly id="validationTooltip01" required value="@Model.Id" required>
         </div>
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">Família passando por insegurança:</label>

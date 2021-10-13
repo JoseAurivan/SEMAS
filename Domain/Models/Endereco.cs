@@ -19,6 +19,7 @@ namespace Domain.Models
         public string Cep { get; set; }
         public string Bairro { get; set; }
         public string Complemento { get; set; }
+        
         public Residencia TipoResidencia { get; set; }
         public TipoEndereco TipoEndereco { get; set; }
 

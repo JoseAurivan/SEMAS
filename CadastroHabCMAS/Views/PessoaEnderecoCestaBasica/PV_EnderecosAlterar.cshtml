@@ -1,44 +1,60 @@
-﻿
-@model CadastroHabCMAS.ViewModel.EnderecoViewModels.EnderecoAlterarViewModel
+﻿@model CadastroHabCMAS.ViewModel.EnderecoViewModels.EnderecoAlterarViewModel
 
 @{
     Layout = null;
     //TODO for each com os enderecos
 }
 
-<p class="lead">Altere o Endereco</p>
-    <div class="form-row">
-        <div class="col-md-3 mb-3">
-            <label for="validationTooltip01">Estado:</label>
-            <input type="text" class="form-control" id="validationTooltip01" required placeholder="Nome do Estado" required>
+<form asp-action="Alterar" method="post">
+    @for (var i = 0; i < Model.PessoaEnderecos.Count; i++)
+    {
+        <p class="lead">CPF do Morador</p>
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">CPF:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Cpf" id="validationTooltip01" placeholder="Nome do Estado" readonly>
+            </div>
+            <div class="col-md-3 mb-3">
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Id" id="validationTooltip01" placeholder="Nome do Estado" hidden readonly>
+            </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <label for="validationTooltip01">Cidade:</label>
-            <input type="text"  class="form-control" id="validationTooltip01" required placeholder="Nome da Cidade" required>
+        <p class="lead">Altere o Endereco</p>
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Estado:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Endereco.Estado" id="validationTooltip01" placeholder="Nome do Estado" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Cidade:</label>
+                <input type="text" class="form-control"asp-for="PessoaEnderecos[i].Endereco.Cidade" id="validationTooltip01" placeholder="Nome da Cidade" required>
+            </div>
+            <div class="col-md-3 mb-3" hidden>
+                <label for="validationTooltip01">ID:</label>
+                <input type="text" class="form-control"asp-for="PessoaEnderecos[i].Endereco.Id" id="validationTooltip01" placeholder="Nome da Cidade" required>
+            </div>
         </div>
-    </div>
-    <div class="form-row">
-        <div class="col-md-6 mb-3">
-            <label for="validationTooltip01">Complemento:</label>
-            <input type="text"  class="form-control" id="validationTooltip01" required placeholder="Complemento" required>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="validationTooltip01">Complemento:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Endereco.Complemento" id="validationTooltip01" placeholder="Complemento" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Bairro:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Endereco.Bairro" id="validationTooltip01" placeholder="Nome do Bairro" required>
+            </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <label for="validationTooltip01">Bairro:</label>
-            <input type="text" class="form-control" id="validationTooltip01" required placeholder="Nome do Bairro" required>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="validationTooltip01">CEP:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Endereco.Cep" id="validationTooltip01" placeholder="CEP" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label>Tipo de Endereço:</label>
+                <select class="form-select" asp-for="PessoaEnderecos[i].Endereco.TipoEndereco" aria-label="Default select example">
+                    <option value="Imovel">Imovel</option>
+                    <option value="Correspondencia">Correspondencia</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="form-row">
-        <div class="col-md-6 mb-3">
-            <label for="validationTooltip01">CEP:</label>
-            <input type="text" class="form-control"  id="validationTooltip01" required placeholder="CEP" required>
-        </div>
-        <div class="col-md-3 mb-3">
-            <label>Tipo de Endereço:</label>
-            <select  class="form-select" aria-label="Default select example">
-                <option value="Imovel">Imovel</option>
-                <option value="Correspondencia">Correspondencia</option>
-            </select>
-        </div>
-    </div>
-
-        
+    }
+</form>

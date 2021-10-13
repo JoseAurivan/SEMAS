@@ -13,8 +13,6 @@ namespace CadastroHabCMAS.ViewModel.CestasBasicasViewModels
 
         public Pessoa Pessoa { get; set; }
         public int IdPessoa { get; set; }
-        
-        public string Nis { get; set; }
 
         public CestaBasica ToModelCestaBasica(string numeroMeses, int quantidade )
         {

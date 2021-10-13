@@ -11,17 +11,14 @@ namespace Domain.Models
         {
             Enderecos = new List<PessoaEndereco>();
         }
-
-        public int Id { get; set; }
+        public int Id {get; set;}
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string Rg { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
-
-        
-
         public Sexo Sexo { get; set; }
+        public CadastroCmas CadastroCmas { get; set; }
         public virtual ICollection<PessoaEndereco> Enderecos { get; set; }
 
         public override bool Equals(object obj)

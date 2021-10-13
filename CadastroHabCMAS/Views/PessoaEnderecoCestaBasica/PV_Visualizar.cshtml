@@ -1,0 +1,33 @@
+﻿@model CadastroHabCMAS.ViewModel.CestasBasicasViewModels.VisualizarCestaBasicaViewModel
+
+@{
+    Layout = null;
+}
+<form asp-action="Visualizar" method="post">
+    <input asp-for="Nome" hidden>
+    <input asp-for="Complemento" hidden>
+    <input asp-for="Bairro" hidden>
+    <input asp-for="Cep" hidden>
+    <input asp-for="Cpf" hidden>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Unidade SEMAS:</label>
+            <select asp-for="NomeDaUnidade" class="form-select">
+                @for (var i = 0; i < Model.Entregas.Count; i++)
+                {
+                    <option value="@Model.Entregas[i].Unidade">@Model.Entregas[i].Unidade</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Nome Do Agente:</label>
+            <select asp-for="NomeDoAgente" class="form-select">
+                @for (var i = 0; i < Model.Entregas.Count; i++)
+                {
+                    <option value="@Model.Entregas[i].NomeAgente">@Model.Entregas[i].NomeAgente</option>
+                }
+            </select>
+        </div>
+    </div>
+    <input type="submit" class="btn-info" value="Gerar Relatório"/>
+</form>

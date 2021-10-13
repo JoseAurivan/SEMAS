@@ -1,0 +1,47 @@
+﻿@model CadastroHabCMAS.ViewModel.CadastroCMASViewModels.EntregaViewModel
+
+    <form asp-action="Lupa" method="post">
+        <p class="lead">Entregas de Cestas Básicas</p>
+        <input asp-for="CestaBasica.Id" hidden readonly>
+        @for (int i = 0; i < Model.Entregas.Count; i++ )
+        {
+            <input type="text" asp-for="Entregas[i].Id"  class="form-control" id="nis" placeholder="Nome do agente" aria-label="Recipient's username" readonly hidden>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationTooltip01">Unidade da Entrega:</label>
+                                <div class="input-group mb-3">
+                                    <select asp-for="Entregas[i].Unidade" class="form-select">
+                                        <option value="CrasUniao">CRAS União</option>
+                                        <option value="CrasEsperanca">CRAS Esperanca</option>
+                                        <option value="CrasSantinoDiasAlecrim">CRAS Santino Dias Alecrim</option>
+                                        <option value="NucleodeAssistenciaSocial">Núcleo de Assistência Social</option>
+                                        <option value="AssistenciaCovid">Assistência COVID</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationTooltip01">Agente da Entrega:</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" asp-for="Entregas[i].NomeAgente"  class="form-control" id="nis" aria-label="Recipient's username">
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationTooltip01">Data da Entrega:</label>
+                                <div class="input-group mb-3">
+                                    <input type="date" asp-for="Entregas[i].DataEntrega"  class="form-control" id="nis" placeholder="dd/mm/aaaa" aria-label="Recipient's username">
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationTooltip01">Status da Entrega:</label>
+                                <div class="input-group mb-3">
+                                    <select asp-for="Entregas[i].EntregaStatus" class="form-select">
+                                        <option value="AEntregar">A entregar</option>
+                                        <option value="Entregue">Entregue</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+        }
+        <input class="btn  btn-outline-success" type="submit">
+        <input class="btn  btn-outline-warning" type="reset">
+    </form>

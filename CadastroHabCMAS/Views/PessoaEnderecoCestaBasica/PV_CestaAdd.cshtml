@@ -6,7 +6,7 @@
 }
 <form asp-action="PV_CestaAdd" method="post">
     <p class="lead">Adicione uma Cesta basica</p>
-    <input type="text" asp-for="IdPessoa" value="@Model.Pessoa.Id">
+    <input type="text" asp-for="IdPessoa" value="@Model.Pessoa.Id" hidden readonly>
     <div class="form-row">
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">Quantidade:</label>

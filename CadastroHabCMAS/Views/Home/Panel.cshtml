@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Painel de Controle";
     Layout = "_Layout";
 }
@@ -28,52 +27,73 @@
         .card{
          background-color: #51a8b1;   
         }
+        #fazenda-header{
+            background-color: #1e7e34;
+        }
+        #fazenda-body{
+            background-color: #28b61f;
+        }
+        #dois-header {
+            background-color: #e0a800;
+        }
+        #dois-body {
+            background-color: #e6c60d;
+        }
     </style>
 </head>
 <div class="flex-container">
     <div class="card" style="width: 18rem;">
-        <div class="card-header">
+        <div class="card-header" id="dois-header">
             Cadastro de Pessoas
         </div>
-        <div class="card-body">
+        <div class="card-body" id="dois-body">
             <p class="card-text">Insira os dados pessoais e o endereço da pessoa para registrar ambos.</p>
             <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Cadastro" class="btn btn-outline-light">Registrar</a>
         </div>
     </div>
     <div class="card" style="width: 18rem;">
+        <div class="card-header" id="fazenda-header">
+            Alterar Endereço
+        </div>
+        <div class="card-body" id="fazenda-body">
+            <p class="card-text">Altere o Endereço de uma pessoa já cadastrada em nosso sistema</p>
+            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Alterar" class="btn btn-outline-light">Registrar</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-header" id="fazenda-header">
+            Adicionar Endereço
+        </div>
+        <div class="card-body" id="fazenda-body">
+            <p class="card-text">Adicione um Endereço a uma pessoa já cadastrada em nosso sistema</p>
+            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Adicionar" class="btn btn-outline-light">Registrar</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
         <div class="card-header">
-            Cadastro do CMAS
+            Cadastro da SEMAS
         </div>
         <div class="card-body">
-            <p class="card-text">Cadastre uma pessoa ja existente no CMAS para recebimento de cestas basicas</p>
+            <p class="card-text">Cadastre uma pessoa ja existente na SEMAS para recebimento de cestas basicas</p>
             <a asp-controller="CadastroCmas" asp-action="Adicionar" class="btn btn-outline-light">Registrar</a>
         </div>
     </div>
     <div class="card" style="width: 18rem;">
         <div class="card-header">
-            Visualizar cestas básicas
+            Gerar Declaração de Recebimento da Cesta Básica
         </div>
         <div class="card-body">
-            <p class="card-text">Veja e/ou atualize a situação das pessoas que foram contempladas com cestas basicas</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Visualizar" class="btn btn-outline-light">Visualizar</a>
+            <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas</p>
+            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Visualizar" class="btn btn-outline-light">Gerar</a>
         </div>
     </div>
     <div class="card" style="width: 18rem;">
         <div class="card-header">
-            Alterar endereço de uma pessoa
+            Consultar Relatório Mensal de Cestas Básicas
         </div>
         <div class="card-body">
-            <p class="card-text">Altere um endereço de uma pessoa ja cadastrada.</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Alterar" class="btn btn-outline-light">Alterar</a>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Adicionar endereço a uma pessoa
-        </div>
-        <div class="card-body">
-            <p class="card-text">Adicione um outro endereço a uma pessoa ja cadastrada.</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Adicionar" class="btn btn-outline-light">Registrar</a>
+            <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas de uma determinada unidade em um determinado mês</p>
+            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="VisualizarMensal"  class="btn btn-outline-light">Consultar</a>
         </div>
     </div>
     <div class="card" style="width: 18rem;">
@@ -81,8 +101,17 @@
             Adicionar uma cesta básica
         </div>
         <div class="card-body">
-            <p class="card-text">Conceda uma cesta básica a uma pessoa que já possui um cadastro no CMAS.</p>
+            <p class="card-text">Conceda uma cesta básica a uma pessoa que já possui um cadastro na SEMAS.</p>
             <a asp-controller="PessoaEnderecoCestaBasica" asp-action="AdicionarCestaBasica" class="btn btn-outline-light">Registrar</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Verificar todos os cadastros
+        </div>
+        <div class="card-body">
+            <p class="card-text">Veja o CPF e o NIS de todos os cadastrados em nosso sistema</p>
+            <a asp-controller="CadastroCmas" asp-action="ListarCadastros" class="btn btn-outline-light">Registrar</a>
         </div>
     </div>
 </div>

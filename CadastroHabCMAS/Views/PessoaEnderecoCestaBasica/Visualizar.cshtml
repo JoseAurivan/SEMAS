@@ -1,4 +1,4 @@
-﻿@model CadastroHabCMAS.ViewModel.CestasBasicasViewModels.VisualizarCestaBasicaViewModel
+﻿@using CadastroHabCMAS.Controllers
 @{
     ViewBag.Title = "Cestas Básicas";
     Layout = "_Layout";
@@ -8,7 +8,7 @@
     <link href="~/css/site.css" rel="stylesheet">
     <style>
         body{
-            background-color: #E8EEF1;
+          background-color: #E8EEF1;
         }
         .form--cadastro{
           margin: 40px 40px 40px 40px;
@@ -26,50 +26,60 @@
 </head>
 
 <div class="form--cadastro">
-    <p class="h4">Visualizar Contemplados</p>
+    <p class="h4">Gerar Relatório dos Contemplados</p>
     <hr>
     <h6 class="card-subtitle mb-2 text-muted">
         <div asp-validation-summary="All" style="color: red;text-decoration: none;"></div>
     </h6>
     <p class="lead">Contemplados</p>
-    <form asp-action="Visualizar" method="post">
+    
         <div class="form-row">
             <div class="col-md-3 mb-3">
                 <label for="validationTooltip01">CPF:</label>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="CPF" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" id="cpf" placeholder="CPF" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" id="typeOf" value="visualizar" hidden>
                     <div class="input-group-append">
                         <a href="#">
-                            <span class="glyphicon glyphicon-search input-group-text"></span>
+                            <span onclick="encontrarCPF()" class="glyphicon glyphicon-search input-group-text"></span>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-3">
-                <label for="validationTooltip01">NIS:</label>
-                <input type="text" class="form-control" id="validationTooltip01" value="TESTANDO" placeholder="NIS" readonly>
-            </div>
         </div>
-        @{
-            //TODO laço de repetição enquanto houver meses a serem entregues
-        }
-        <p class="lead">Cestas Básicas</p>
-        <div class="form-row">
-            <div class="col-md-3 mb-3">
-                <label for="validationTooltip01">Quantidade:</label>
-                <input asp-for="Quant" type="text" class="form-control" id="validationTooltip01" value="TESTANDO" placeholder="NIS" readonly>
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="validationTooltip01">Status:</label>
-                <select asp-for="Status" class="form-select" aria-label="Default select example">
-                    <option value="true">Entregue</option>
-                    <option value="false">A Entregar</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="validationTooltip01">Data da Entrega:</label>
-                <input asp-for="PrxEntrega" type="text" class="form-control" id="validationTooltip01" value="TESTANDO" placeholder="NIS" readonly>
-            </div>
+        <div id="ToChange">
+
         </div>
-    </form>
+    
+
+    @section Scripts
+    {
+        <script>
+           let urlPessoaEndereco;
+           function init(url) {
+               urlPessoaEndereco = url;    
+           }
+           
+           $(document).ready(function() {
+             let url = "@Url.Action(nameof(PessoaEnderecoCestaBasicaController.EncontrarCpf))";
+             init(url);
+           });
+           
+           function encontrarCPF() {
+               console.log(urlPessoaEndereco)
+               let cpf = document.getElementById("cpf").value;
+               let typeOf = document.getElementById("typeOf").value;
+               console.log(cpf)
+               $.ajax({      
+                   type: "POST",
+                   url: urlPessoaEndereco,
+                   data: {"cpf":cpf, "typeOf":typeOf},
+                   success: function(response) {
+                          $('#ToChange').html(response)                   
+                   }
+               });    
+           }
+           </script>
+    }
+
 </div>

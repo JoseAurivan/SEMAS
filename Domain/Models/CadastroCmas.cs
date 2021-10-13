@@ -1,11 +1,12 @@
-﻿using Domain.Interfaces;
+﻿
+using Domain.Interfaces;
 
 namespace Domain.Models
 {
     public class CadastroCmas:IModelBase
     {
         
-        public Pessoa Pessoa { get; set; }
+        
         public int Id { get; set; }
         public string Nis { get; set; }
         public bool Inseguranca { get; set; }

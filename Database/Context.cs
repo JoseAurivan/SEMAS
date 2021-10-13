@@ -23,6 +23,7 @@ namespace Database
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<CadastroCmas> Cadastros { get; set; }
         public DbSet<PessoaEndereco> PessoaEnderecos { get; set; }
+        public DbSet<Entrega> Entregas { get; set; }
         public Task SaveChangesAsync() => SaveChangesAsync(default);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +34,7 @@ namespace Database
            modelBuilder.ApplyConfiguration(new CadastroCmasConfiguration());
            modelBuilder.ApplyConfiguration(new CestaBasicaConfiguration());
            modelBuilder.ApplyConfiguration(new PessoaEnderecoConfiguration());
+           modelBuilder.ApplyConfiguration(new EntregaConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

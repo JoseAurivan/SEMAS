@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Application.Enums;
+using Domain.Interfaces;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Services.DataStructures
 {

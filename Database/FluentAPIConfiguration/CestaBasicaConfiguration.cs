@@ -8,7 +8,9 @@ namespace Database.FluentAPIConfiguration
     {
         public void Configure(EntityTypeBuilder<CestaBasica> builder)
         {
-            builder.ToTable("cestaBasica");
+            builder.ToTable("cestaBasica")
+                .HasMany(c => c.Entregas)
+                .WithOne(x => x.CestaBasica);
         }
     }
 }

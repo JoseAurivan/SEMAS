@@ -42,9 +42,6 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("PessoaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Residencia")
                         .HasColumnType("nvarchar(max)");
 
@@ -55,8 +52,6 @@ namespace Database.Migrations
 
                     b.HasIndex("Nis")
                         .IsUnique();
-
-                    b.HasIndex("PessoaId");
 
                     b.ToTable("cadastroCMAS");
                 });
@@ -71,14 +66,8 @@ namespace Database.Migrations
                     b.Property<string>("NumeroMeses")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PrxEntrega")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Quant")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -123,12 +112,44 @@ namespace Database.Migrations
                     b.ToTable("enderecos");
                 });
 
+            modelBuilder.Entity("Domain.Models.Entrega", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CestaBasicaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataEntrega")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EntregaStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NomeAgente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Unidade")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CestaBasicaId");
+
+                    b.ToTable("entrega");
+                });
+
             modelBuilder.Entity("Domain.Models.Pessoa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CadastroCmasId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
@@ -150,6 +171,8 @@ namespace Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CadastroCmasId");
 
                     b.HasIndex("Cpf")
                         .IsUnique();
@@ -204,15 +227,6 @@ namespace Database.Migrations
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("Domain.Models.CadastroCmas", b =>
-                {
-                    b.HasOne("Domain.Models.Pessoa", "Pessoa")
-                        .WithMany()
-                        .HasForeignKey("PessoaId");
-
-                    b.Navigation("Pessoa");
-                });
-
             modelBuilder.Entity("Domain.Models.Endereco", b =>
                 {
                     b.HasOne("Domain.Models.CestaBasica", "Cesta")
@@ -220,6 +234,24 @@ namespace Database.Migrations
                         .HasForeignKey("CestaId");
 
                     b.Navigation("Cesta");
+                });
+
+            modelBuilder.Entity("Domain.Models.Entrega", b =>
+                {
+                    b.HasOne("Domain.Models.CestaBasica", "CestaBasica")
+                        .WithMany("Entregas")
+                        .HasForeignKey("CestaBasicaId");
+
+                    b.Navigation("CestaBasica");
+                });
+
+            modelBuilder.Entity("Domain.Models.Pessoa", b =>
+                {
+                    b.HasOne("Domain.Models.CadastroCmas", "CadastroCmas")
+                        .WithMany()
+                        .HasForeignKey("CadastroCmasId");
+
+                    b.Navigation("CadastroCmas");
                 });
 
             modelBuilder.Entity("Domain.Models.PessoaEndereco", b =>
@@ -239,6 +271,11 @@ namespace Database.Migrations
                     b.Navigation("Endereco");
 
                     b.Navigation("Pessoa");
+                });
+
+            modelBuilder.Entity("Domain.Models.CestaBasica", b =>
+                {
+                    b.Navigation("Entregas");
                 });
 
             modelBuilder.Entity("Domain.Models.Endereco", b =>

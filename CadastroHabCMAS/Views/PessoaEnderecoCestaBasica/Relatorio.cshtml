@@ -1,0 +1,48 @@
+﻿@using System.Linq
+@model CadastroHabCMAS.ViewModel.CestasBasicasViewModels.VisualizarCestaBasicaViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Relatorio</title>
+    <style>
+        input{
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            width: 70%;
+            
+        }
+        input:focus{
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-left: 80px; margin-right: 80px">
+    <h3 style="text-decoration: underline">DECLARAÇÃO DE RECEBIMENTO</h3>
+    <p>Eu, <input asp-for="Nome" id="nome"> ,</p>
+    <p>residente e domiciliado em: <input asp-for="Complemento"><br>Bairro: <input asp-for="Bairro"><br>CEP: <input asp-for="Cep"></p>
+    <p>portador do CPF: <input asp-for="Cpf"> </p>
+    <p>Declaro que recebi da Secretaria de Assistência Social (SEMAS) o benefício eventual de auxílio alimentação,</p>
+    <p>por meio do agente: <input asp-for="NomeDoAgente"></p>
+    <p>que pertence a unidade: <input asp-for="NomeDaUnidade"></p>
+    <p>Firmo presente em Porto Nacional/TO, __/__/____</p>
+    
+    <br><br><br><br><br>
+
+    <hr>
+    <p>Assinatura do Beneficiário</p>
+</div>
+</body>
+<script>
+    window.onload = function() {
+     window.print();
+    };
+</script>
+</html>
