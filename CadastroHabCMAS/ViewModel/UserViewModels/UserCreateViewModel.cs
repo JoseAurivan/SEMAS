@@ -6,7 +6,7 @@ namespace CadastroHabCMAS.ViewModel.UserViewModel
     public class UserCreateViewModel
     {
         [Required(ErrorMessage = "Campo Matrícula é obrigatório")]
-        public string Matricula { get; set; }
+        public string Nome { get; set; }
         
         
         [EmailAddress(ErrorMessage = "Campo de email é obrigatório")]
@@ -22,11 +22,11 @@ namespace CadastroHabCMAS.ViewModel.UserViewModel
         public string Senha { get; set; }
 
 
-        public User GetModel(string cpf, string matricula, string senha, string email)
+        public User GetModel(string cpf, string nome, string senha, string email)
         {
             return new User()
             {
-                Matricula = matricula,
+                Nome = nome,
                 Username = cpf,
                 Password = senha,
                 Email = email

@@ -72,11 +72,13 @@ namespace CadastroHabCMAS.Controllers
                 return View(nameof(CriarUser), userCreateViewModel);
             }
 
-            var user = userCreateViewModel.GetModel(userCreateViewModel.Cpf, userCreateViewModel.Matricula,
+            var user = userCreateViewModel.GetModel(userCreateViewModel.Cpf, userCreateViewModel.Nome,
                 userCreateViewModel.Senha, userCreateViewModel.Email);
             var result = await _userService.Save(user);
+            
             if(result.Type != ServiceResultType.Success) LidarComErro(result,userCreateViewModel);
-            return View(nameof(CriarUser));
+            
+            return View(nameof(Index));
         }
 
         [HttpPost("login")]
@@ -129,7 +131,7 @@ namespace CadastroHabCMAS.Controllers
                     var user = resultado.Result;
                     userMyPageViewModel.Cpf = user.Username;
                     userMyPageViewModel.Senha = user.Password;
-                    userMyPageViewModel.Matricula = user.Matricula;
+                    userMyPageViewModel.Matricula = user.Nome;
                     userMyPageViewModel.Email = user.Email;
                     userMyPageViewModel.Id = user.Id;
                 }
