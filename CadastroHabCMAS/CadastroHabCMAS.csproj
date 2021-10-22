@@ -17,4 +17,15 @@
       <PackageReference Include="jQuery" Version="3.6.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="App\web.config" />
+      <_ContentIncludedByDefault Remove="App\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="App\appsettings.json" />
+      <_ContentIncludedByDefault Remove="App\CadastroHabCMAS.deps.json" />
+      <_ContentIncludedByDefault Remove="App\CadastroHabCMAS.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="App\wwwroot\vanilla-masker-master\bankfacil_vanilla-masker\versions.json" />
+      <_ContentIncludedByDefault Remove="App\wwwroot\vanilla-masker-master\bower.json" />
+      <_ContentIncludedByDefault Remove="App\wwwroot\vanilla-masker-master\package.json" />
+    </ItemGroup>
+
 </Project>
