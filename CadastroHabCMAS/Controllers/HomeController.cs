@@ -10,6 +10,7 @@ using Application.Services.Interfaces;
 using CadastroHabCMAS.Base;
 using Microsoft.AspNetCore.Mvc;
 using CadastroHabCMAS.Models;
+using CadastroHabCMAS.ViewModel.LoginTi;
 using CadastroHabCMAS.ViewModel.UserViewModel;
 using Domain.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -48,6 +49,24 @@ namespace CadastroHabCMAS.Controllers
         public IActionResult Esqueci()
         {
             return View();
+        }
+
+        public IActionResult LoginTi()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoginTi(LoginTiViewModel loginTiViewModel)
+        {
+            if ((!ModelState.IsValid) || !(loginTiViewModel.Username.Equals(loginTiViewModel.TypedUser) 
+                                        && loginTiViewModel.Password.Equals(loginTiViewModel.TypedPassword))) 
+            {
+                ModelState.AddModelError("Error", "Dados incorretos");
+                return View(loginTiViewModel);
+            }
+            
+            return View(nameof(CriarUser));
         }
 
         [HttpPost]

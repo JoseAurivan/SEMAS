@@ -11,7 +11,7 @@ namespace Domain.Models
         }
         public int Id { get; set; }
         public  ICollection<Entrega> Entregas { get; set; }
-        public int Quant {get; set;}
+        public int Quant { get; set; }
         public string NumeroMeses { get; set; }
     }
 }

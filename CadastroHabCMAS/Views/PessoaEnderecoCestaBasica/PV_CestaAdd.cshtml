@@ -17,6 +17,14 @@
             <input type="number"  asp-for="NumeroMeses"class="form-control" id="validationTooltip01"  required>
         </div>
     </div>
+    <div class="form-check form-switch">
+        <input class="form-check-input" asp-for="DeterminacaoJuridica" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Determinação Jurídica</label>
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" asp-for="RecomendacaoTecnica" type="checkbox" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Recomendação Tecnica</label>
+    </div>
     <button class="btn  btn-outline-success" type="submit">Enviar</button>
     <button class="btn  btn-outline-warning" type="reset">Limpar</button>
     </form>

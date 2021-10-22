@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using CadastroHabCMAS.Views.PessoaEndereco;
 using Domain.Models;
 
@@ -22,6 +23,9 @@ namespace CadastroHabCMAS.ViewModel.CadastroCMASViewModels
         public bool Sanitizacao { get; set; }
         [Required]
         public int Id { get; set; }
+        
+        public bool DeterminacaoJudicial { get; set; }
+        public bool RecomendacaoTecnica { get; set; }
 
         public CadastroCmas ToModel(string nis, bool inseguranca, string residencia, string localidade, bool beneficio,
             string familia, bool sanitizacao)
