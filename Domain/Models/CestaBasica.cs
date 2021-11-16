@@ -13,5 +13,9 @@ namespace Domain.Models
         public  ICollection<Entrega> Entregas { get; set; }
         public int Quant { get; set; }
         public string NumeroMeses { get; set; }
+        public bool? DeterminacaoJuridica { get; set; }
+        public bool? RecomendacaoTecnica { get; set; }
+        
+        public string? Caminhos { get; set; }
     }
 }

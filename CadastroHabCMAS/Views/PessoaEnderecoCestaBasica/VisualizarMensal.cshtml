@@ -30,7 +30,8 @@
     <h6 class="card-subtitle mb-2 text-muted">
         <div asp-validation-summary="All" style="color: red;text-decoration: none;"></div>
     </h6>
-    <form asp-action="VisualizarMensal" method="post" >
+    <form asp-action="VisualizarMensal" method="post">
+        <p class="h4">Gerar Relatórios Mensais por Unidade</p>
         <div class="form-row">
             <div class="col-md-3 mb-3">
                 <label for="validationTooltip01">Unidade SEMAS:</label>
@@ -49,10 +50,30 @@
                 </div>
                 <label for="validationTooltip01"> Ano:</label>
                 <div class="input-group mb-3">
-                    <input type="number" asp-for="Ano" min="2021" value="2021"  class="form-control">
+                    <input type="number" asp-for="Ano" min="2021" value="2021" class="form-control">
                 </div>
             </div>
         </div>
         <input type="submit" class="btn-info" value="Gerar Relatório"/>
     </form>
+    <hr>
+<!--   
+    <form asp-action="RelatorioGeralMensal" method="post">
+        <p class="h4">Gerar Relatório Mensal Geral</p>
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01"> Mes:</label>
+                <div class="input-group mb-3">
+                    <input type="number" asp-for="Mes" min="01" value="1" max="12" class="form-control">
+                </div>
+                <label for="validationTooltip01"> Ano:</label>
+                <div class="input-group mb-3">
+                    <input type="number" asp-for="Ano" min="2021" value="2021" class="form-control">
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn-info" value="Gerar Relatório"/>
+    </form>
+ -->
+ 
 </div>

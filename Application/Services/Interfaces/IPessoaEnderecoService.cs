@@ -18,7 +18,11 @@ namespace Application.Services.Interfaces
         Task<ServiceResult> SearchForPessoaEndereco(int idPessoa);
         Task<ServiceResult> SearchForCestaBasica(int idCestaBasica);
         Task<ServiceResult> UpdateCestaBasica(CestaBasica cestaBasica);
-        Task<ServiceResult> ListControl(Unidade unidade, int mes, int ano);
+        Task<ServiceResult> ListControlMonth(Unidade unidade, int mes, int ano);
+        Task<ServiceResult> ListControlAllMonth(int mes, int ano);
+        Task<ServiceResult> ListControlYear(Unidade unidade, int ano);
+        Task<ServiceResult> ListControlAllYear(int ano);
+
 
 
     }

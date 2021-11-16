@@ -34,7 +34,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Erro ao cadastrar pessoa. CPF já cadastrado no sistema."}
+                    Messages = new[] { "Erro ao cadastrar pessoa. CPF já cadastrado no sistema." }
                 };
             }
         }
@@ -76,7 +76,7 @@ namespace Application.Services
             try
             {
                 var pessoa = await _context.Pessoas
-                //    .AsNoTracking()
+                    //    .AsNoTracking()
                     .Include(x => x.Enderecos)
                     .FirstOrDefaultAsync(x => x.Cpf == cpf);
                 if (pessoa is null)
@@ -100,7 +100,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"CPF não cadastrado"}
+                    Messages = new[] { "CPF não cadastrado" }
                 };
             }
         }
@@ -134,7 +134,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Pessoa não cadastrada"}
+                    Messages = new[] { "Pessoa não cadastrada" }
                 };
             }
         }
@@ -167,7 +167,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Pessoa não cadastrada"}
+                    Messages = new[] { "Pessoa não cadastrada" }
                 };
             }
         }
@@ -183,7 +183,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Erro ao cadastrar pessoa"}
+                    Messages = new[] { "Erro ao cadastrar pessoa" }
                 };
             }
         }
@@ -213,8 +213,8 @@ namespace Application.Services
                     .AsNoTracking()
                     .Include(x => x.Pessoa)
                     .ThenInclude(x => x.Pessoa)
-                    .Include(x =>x.Cesta)
-                    .ThenInclude(x=>x.Entregas)
+                    .Include(x => x.Cesta)
+                    .ThenInclude(x => x.Entregas)
                     .FirstOrDefaultAsync(x => x.Pessoa.Contains(pessoaEndereco));
 
                 if (endereco is null)
@@ -238,7 +238,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Endereco não cadastrada"}
+                    Messages = new[] { "Endereco não cadastrada" }
                 };
             }
         }
@@ -264,6 +264,7 @@ namespace Application.Services
                         }
                     };
                 }
+
                 return new ServiceResult<List<PessoaEndereco>>(ServiceResultType.Success)
                 {
                     Result = pessoaEndereco
@@ -274,7 +275,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Endereco não cadastrada"}
+                    Messages = new[] { "Endereco não cadastrada" }
                 };
             }
         }
@@ -290,7 +291,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Erro ao cadastrar pessoa"}
+                    Messages = new[] { "Erro ao cadastrar pessoa" }
                 };
             }
         }
@@ -329,7 +330,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Endereco não cadastrada"}
+                    Messages = new[] { "Endereco não cadastrada" }
                 };
             }
         }
@@ -364,7 +365,7 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Cesta Basica não cadastrada"}
+                    Messages = new[] { "Cesta Basica não cadastrada" }
                 };
             }
         }
@@ -373,29 +374,29 @@ namespace Application.Services
         {
             try
             {
-                return await TryUpdateCestaBasica( cestaBasica);
+                return await TryUpdateCestaBasica(cestaBasica);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Erro ao cadastrar pessoa"}
+                    Messages = new[] { "Erro ao cadastrar pessoa" }
                 };
             }
         }
 
-        public async Task<ServiceResult> ListControl(Unidade unidade, int mes, int ano)
+        public async Task<ServiceResult> ListControlMonth(Unidade unidade, int mes, int ano)
         {
             try
             {
                 var entregas = await _context.Entregas
                     .AsNoTracking()
-                    .Where(x => x.Unidade == unidade 
-                                && x.DataEntrega.HasValue 
-                                && x.DataEntrega.Value.Month == mes 
-                                && x.DataEntrega.Value.Year == ano 
-                                && x.EntregaStatus == StatusEntrega.Entregue)  
+                    .Where(x => x.Unidade == unidade
+                                && x.DataEntrega.HasValue
+                                && x.DataEntrega.Value.Month == mes
+                                && x.DataEntrega.Value.Year == ano
+                                && x.EntregaStatus == StatusEntrega.Entregue)
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
@@ -411,9 +412,10 @@ namespace Application.Services
                         .ThenInclude(x => x.Entregas)
                         .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
                         .FirstOrDefaultAsync();
-                    if(pessoa is not null)
+                    if (pessoa is not null)
                         pessoaEndereco.Add(pessoa.Result);
                 }
+
                 if (pessoaEndereco.Count == 0)
                 {
                     return new ServiceResult(ServiceResultType.NotFound)
@@ -427,7 +429,7 @@ namespace Application.Services
 
                 return new ServiceResult<List<PessoaEndereco>>(ServiceResultType.Success)
                 {
-                    Result = pessoaEndereco
+                    Result = pessoaEndereco.Distinct().ToList()
                 };
             }
             catch (Exception e)
@@ -435,7 +437,173 @@ namespace Application.Services
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Erro ao gerar relatorios "}
+                    Messages = new[] { "Erro ao gerar relatorios " }
+                };
+            }
+        }
+
+        public async Task<ServiceResult> ListControlAllMonth(int mes, int ano)
+        {
+            try
+            {
+                var entregas = await _context.Entregas
+                    .AsNoTracking()
+                    .Where(x => x.DataEntrega.HasValue
+                                && x.DataEntrega.Value.Month == mes
+                                && x.DataEntrega.Value.Year == ano
+                                && x.EntregaStatus == StatusEntrega.Entregue)
+                    .ToListAsync();
+
+                List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
+
+                foreach (var ent in entregas)
+                {
+                    var pessoa = await _context.PessoaEnderecos
+                        .AsNoTracking()
+                        .Include(x => x.Pessoa)
+                        .ThenInclude(x => x.CadastroCmas)
+                        .Include(x => x.Endereco)
+                        .ThenInclude(x => x.Cesta)
+                        .ThenInclude(x => x.Entregas)
+                        .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
+                        .FirstOrDefaultAsync();
+                    if (pessoa is not null)
+                        pessoaEndereco.Add(pessoa);
+                }
+
+                if (pessoaEndereco.Count == 0)
+                {
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[]
+                        {
+                            "Dados nao foram encontrados"
+                        }
+                    };
+                }
+
+                return new ServiceResult<List<PessoaEndereco>>(ServiceResultType.Success)
+                {
+                    Result = pessoaEndereco.Distinct().ToList()
+                };
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] { "Erro ao gerar relatorios " }
+                };
+            }
+        }
+
+        public async Task<ServiceResult> ListControlYear(Unidade unidade, int ano)
+        {
+            try
+            {
+                var entregas = await _context.Entregas
+                    .AsNoTracking()
+                    .Where(x => x.Unidade == unidade
+                                && x.DataEntrega.HasValue
+                                && x.DataEntrega.Value.Year == ano
+                                && x.EntregaStatus == StatusEntrega.Entregue)
+                    .ToListAsync();
+
+                List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
+
+                foreach (var ent in entregas)
+                {
+                    var pessoa = await _context.PessoaEnderecos
+                        .AsNoTracking()
+                        .Include(x => x.Pessoa)
+                        .ThenInclude(x => x.CadastroCmas)
+                        .Include(x => x.Endereco)
+                        .ThenInclude(x => x.Cesta)
+                        .ThenInclude(x => x.Entregas)
+                        .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
+                        .FirstOrDefaultAsync();
+                    if (pessoa is not null)
+                        pessoaEndereco.Add(pessoa);
+                }
+
+                if (pessoaEndereco.Count == 0)
+                {
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[]
+                        {
+                            "Dados nao foram encontrados"
+                        }
+                    };
+                }
+
+                return new ServiceResult<List<PessoaEndereco>>(ServiceResultType.Success)
+                {
+                    Result = pessoaEndereco.Distinct().ToList()
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] { "Erro ao gerar relatorios " }
+                };
+            }
+        }
+
+        public async Task<ServiceResult> ListControlAllYear(int ano)
+        {
+            try
+            {
+                var entregas = await _context.Entregas
+                    .AsNoTracking()
+                    .Where(x =>x.DataEntrega.HasValue
+                                && x.DataEntrega.Value.Year == ano
+                                && x.EntregaStatus == StatusEntrega.Entregue)
+                    .ToListAsync();
+
+                List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
+
+                foreach (var ent in entregas)
+                {
+                    var pessoa = await _context.PessoaEnderecos
+                        .AsNoTracking()
+                        .Include(x => x.Pessoa)
+                        .ThenInclude(x => x.CadastroCmas)
+                        .Include(x => x.Endereco)
+                        .ThenInclude(x => x.Cesta)
+                        .ThenInclude(x => x.Entregas)
+                        .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
+                        .FirstOrDefaultAsync();
+                   if (pessoa is not null)
+                        pessoaEndereco.Add(pessoa);
+                  
+                }
+
+                if (pessoaEndereco.Count == 0)
+                {
+                    return new ServiceResult(ServiceResultType.NotFound)
+                    {
+                        Messages = new[]
+                        {
+                            "Dados nao foram encontrados"
+                        }
+                    };
+                }
+
+               
+                return new ServiceResult<List<PessoaEndereco>>(ServiceResultType.Success)
+                {
+                    Result = pessoaEndereco.Distinct().ToList()
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, nameof(UserService));
+                return new ServiceResult(ServiceResultType.InternalError)
+                {
+                    Messages = new[] { "Erro ao gerar relatorios " }
                 };
             }
         }
@@ -445,7 +613,7 @@ namespace Application.Services
             if (cestaBasica is null)
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Dados nulos"}
+                    Messages = new[] { "Dados nulos" }
                 };
 
             if (cestaBasica.Id == default) _context.CestaBasicas.Add(cestaBasica);
@@ -453,12 +621,11 @@ namespace Application.Services
 
             foreach (var entrega in cestaBasica.Entregas)
             {
-                
                 entrega.CestaBasica = cestaBasica;
                 if (entrega.Id == default) _context.Entregas.Add(entrega);
                 else _context.Entry(entrega).State = EntityState.Modified;
             }
-            
+
             await _context.SaveChangesAsync();
             return new ServiceResult<int>(ServiceResultType.Success)
             {
@@ -471,19 +638,20 @@ namespace Application.Services
             if (pessoaEndereco is null)
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Dados nulos"}
+                    Messages = new[] { "Dados nulos" }
                 };
 
             if (pessoaEndereco.PessoaId == default && pessoaEndereco.EnderecoId == default)
             {
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"IDs nao deveriam ser nulos"}
+                    Messages = new[] { "IDs nao deveriam ser nulos" }
                 };
             }
 
             _context.Entry(pessoaEndereco).State = EntityState.Modified;
             _context.Entry(pessoaEndereco.Endereco).State = EntityState.Modified;
+            _context.Entry(pessoaEndereco.Pessoa).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return new ServiceResult<int>(ServiceResultType.Success)
             {
@@ -496,7 +664,7 @@ namespace Application.Services
             if (endereco is null || cestaBasica is null)
                 return new ServiceResult(ServiceResultType.InternalError)
                 {
-                    Messages = new[] {"Dados nulos"}
+                    Messages = new[] { "Dados nulos" }
                 };
 
             if (cestaBasica.Id == default) _context.CestaBasicas.Add(cestaBasica);
@@ -504,7 +672,6 @@ namespace Application.Services
 
             foreach (var entrega in cestaBasica.Entregas)
             {
-                
                 entrega.CestaBasica = cestaBasica;
                 if (entrega.Id == default) _context.Entregas.Add(entrega);
                 else _context.Entry(entrega).State = EntityState.Modified;

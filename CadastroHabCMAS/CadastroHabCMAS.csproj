@@ -28,4 +28,9 @@
       <_ContentIncludedByDefault Remove="App\wwwroot\vanilla-masker-master\package.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="App\Anexos" />
+      <Folder Include="wwwroot\Arquivos\Arquivos_Usuario\Recebidos" />
+    </ItemGroup>
+
 </Project>

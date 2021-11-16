@@ -16,10 +16,10 @@ namespace CadastroHabCMAS.ViewModel.PessoaEnderecoViewModel
         public string Cpf { get; set; }
         [Required(ErrorMessage = "Campo RG  é obrigatorio")]
         public string Rg { get; set; }
-        [Required(ErrorMessage = "Campo TELEFONE  é obrigatorio")]
+        
         public string Telefone { get; set; }
         
-        [Required(ErrorMessage = "Campo EMAIL  é obrigatorio")]
+        
         [EmailAddress(ErrorMessage = "Campo email deve ser válido")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Campo SEXO  é obrigatorio")]

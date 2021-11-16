@@ -63,11 +63,20 @@ namespace Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Caminhos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("DeterminacaoJuridica")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NumeroMeses")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quant")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("RecomendacaoTecnica")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

@@ -1,20 +1,19 @@
-﻿
-@model CadastroHabCMAS.ViewModel.CestasBasicasViewModels.AddCestaBasicaViewModel
+﻿@model CadastroHabCMAS.ViewModel.CestasBasicasViewModels.AddCestaBasicaViewModel
 
 @{
     Layout = null;
 }
-<form asp-action="PV_CestaAdd" method="post">
+<form asp-action="PV_CestaAdd" enctype="multipart/form-data" method="post">
     <p class="lead">Adicione uma Cesta basica</p>
     <input type="text" asp-for="IdPessoa" value="@Model.Pessoa.Id" hidden readonly>
     <div class="form-row">
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">Quantidade:</label>
-            <input type="number" asp-for="Quant" class="form-control" id="validationTooltip01" required  >
+            <input type="number" asp-for="Quant" class="form-control" id="validationTooltip01" required>
         </div>
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">Numero de Meses:</label>
-            <input type="number"  asp-for="NumeroMeses"class="form-control" id="validationTooltip01"  required>
+            <input type="number" asp-for="NumeroMeses"class="form-control" id="validationTooltip01" required>
         </div>
     </div>
     <div class="form-check form-switch">
@@ -22,10 +21,13 @@
         <label class="form-check-label" for="flexSwitchCheckDefault">Determinação Jurídica</label>
     </div>
     <div class="form-check form-switch">
-      <input class="form-check-input" asp-for="RecomendacaoTecnica" type="checkbox" id="flexSwitchCheckDefault">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Recomendação Tecnica</label>
+        <input class="form-check-input" asp-for="RecomendacaoTecnica" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Recomendação Tecnica</label>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlFile1">Anexos (Se houver)</label>
+        <input type="file" asp-for="Anexos" class="form-control-file" id="anexos" multiple>
     </div>
     <button class="btn  btn-outline-success" type="submit">Enviar</button>
     <button class="btn  btn-outline-warning" type="reset">Limpar</button>
-    </form>
-        
+</form>

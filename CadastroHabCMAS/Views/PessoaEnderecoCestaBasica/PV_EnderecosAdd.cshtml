@@ -8,7 +8,7 @@
 }
 <form asp-action="PV_EnderecosAdd" method="post">
     <p class="lead">Adicione um Endereco</p>
-    <input type="text" asp-for="Id" value="@Model.Pessoa.Id" >
+    <input type="text" hidden asp-for="Id" value="@Model.Pessoa.Id" >
         <div class="form-row">
             <div class="col-md-6 mb-3">
                 <label for="validationTooltip01">CEP:</label>

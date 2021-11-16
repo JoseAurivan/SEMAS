@@ -40,34 +40,12 @@ namespace CadastroHabCMAS.Controllers
 
             return View();
         }
-
-        public IActionResult CriarUser()
-        {
-            return View();
-        }
-
+        
         public IActionResult Esqueci()
         {
             return View();
         }
-
-        public IActionResult LoginTi()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult LoginTi(LoginTiViewModel loginTiViewModel)
-        {
-            if ((!ModelState.IsValid) || !(loginTiViewModel.Username.Equals(loginTiViewModel.TypedUser) 
-                                        && loginTiViewModel.Password.Equals(loginTiViewModel.TypedPassword))) 
-            {
-                ModelState.AddModelError("Error", "Dados incorretos");
-                return View(loginTiViewModel);
-            }
-            
-            return View(nameof(CriarUser));
-        }
+        
 
         [HttpPost]
         public async Task<IActionResult> Esqueci(UserEsqueciViewModel userEsqueciViewModel)
@@ -82,23 +60,7 @@ namespace CadastroHabCMAS.Controllers
             if (result.Type != ServiceResultType.Success) return LidarComErro(result, userEsqueciViewModel);
             return View(nameof(Index));
         }
-
-        [HttpPost]
-        public async Task<IActionResult> CriarUser(UserCreateViewModel userCreateViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(nameof(CriarUser), userCreateViewModel);
-            }
-
-            var user = userCreateViewModel.GetModel(userCreateViewModel.Cpf, userCreateViewModel.Nome,
-                userCreateViewModel.Senha, userCreateViewModel.Email);
-            var result = await _userService.Save(user);
-            
-            if(result.Type != ServiceResultType.Success) LidarComErro(result,userCreateViewModel);
-            
-            return View(nameof(Index));
-        }
+        
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginViewModel userLoginViewModel)

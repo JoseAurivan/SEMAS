@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,6 +32,13 @@ namespace CadastroHabCMAS
             services
                 .AddDatabaseContext()
                 .AddServices();
+            
+            services.AddDbContext<Context>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
+            using var provider = services.BuildServiceProvider();
+            services.AddControllersWithViews();
+            var context = provider.GetRequiredService<Context>();
+            context.Database.Migrate();
             
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => options.LoginPath = "/login");
@@ -59,6 +67,8 @@ namespace CadastroHabCMAS
             app.UseAuthentication();
             
             app.UseAuthorization();
+            
+            
             
             
             app.UseEndpoints(endpoints =>

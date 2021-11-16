@@ -2,7 +2,7 @@
 @model CadastroHabCMAS.ViewModel.CadastroCMASViewModels.RelatorioControleViewModel
 
 @{
-    Layout = null;
+    Layout = "_LayoutEmpty";
 }
 
 <!DOCTYPE html>
@@ -17,22 +17,26 @@
             padding: 10px;
         }
         table, th, td{
-            width: 100%;
+            margin: 2px;
             border: 1px solid black;
         }
         hgroup{
             text-align: center;
+        }
+        table{
+            table-layout: fixed;
         }
     </style>
 </head>
 <body>
 <div class="center">
     <hgroup>
-        <h3>CONTROLE DOS KITS ALIMENTAÇÃO - DOADAS PELO GOVERNO DO ESTADO DO TOCANTINS - 2021</h3>
+        <h3>CONTROLE DOS KITS ALIMENTAÇÃO - DOADAS PELO GOVERNO DO ESTADO DO TOCANTINS - @Model.Mes/@Model.Ano</h3>
         <h5>SECRETARIA DE ASSITENCIA SOCIAL (SEMAS)</h5>
     </hgroup>
     <table>
         <tr>
+            <td>Unidade</td>
             <td>Nome</td>
             <td>CPF</td>
             <td>Endereco</td>
@@ -40,37 +44,53 @@
             <td>Data Entrega</td>
             <td>Assinatura</td>
         </tr>
-        @for (int i = 0; i < Model.PessoaEnderecos.Count; i++)
+        @if (Model.PessoaEnderecos is not null)
         {
-            <tr>
-                <td>@Model.PessoaEnderecos[i].Pessoa.Nome</td>
-                <td>@Model.PessoaEnderecos[i].Pessoa.Cpf</td>
-                <td>@Model.PessoaEnderecos[i].Endereco.Complemento</td>
-                <td>@Model.PessoaEnderecos[i].Pessoa.Telefone</td>
-                <td>
-                    @for (int j = 0; j < Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.Count; j++)
+            @for (int i = 0; i < Model.PessoaEnderecos.Count; i++)
+            {
+                @if (Model.PessoaEnderecos[i] is not null)
+                {
+                    @if (Model.PessoaEnderecos[i].Endereco is not null)
                     {
-                        @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).EntregaStatus == StatusEntrega.Entregue)
+                        @if (Model.PessoaEnderecos[i].Endereco.Cesta is not null)
                         {
-                            @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).NomeAgente
-                            <b>-</b>
-                            @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega
-                            <br>
+                            @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas is not null)
+                            {
+                                <tr>
+                                    <td>@Model.Unidade</td>
+                                    <td>@Model.PessoaEnderecos[i].Pessoa.Nome</td>
+                                    <td>@Model.PessoaEnderecos[i].Pessoa.Cpf</td>
+                                    <td>@Model.PessoaEnderecos[i].Endereco.Complemento</td>
+                                    <td>@Model.PessoaEnderecos[i].Pessoa.Telefone</td>
+                                    <td>
+                                        @for (int j = 0; j < Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.Count; j++)
+                                        {
+                                            @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).EntregaStatus == StatusEntrega.Entregue)
+                                            {
+                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).NomeAgente
+                                                <b>:</b>
+                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega
+                                                <br>
+                                                <hr>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            }
                         }
-                        
                     }
-                </td>
-                <td>
-                    
-                </td>
-            </tr>
+                }
+            }
         }
     </table>
-        <hgroup>
-            <h4>Av. Antônio Aires Primo nº 2138, Centro</h4>
-            <h4>77 500 000 Porto Nacional – TO</h4>
-            <h4>Fone: 63 3363 5774 E-mail: semas.portonacional.to@gmail.com</h4>
-        </hgroup>
+    <hgroup>
+        <h4>Av. Antônio Aires Primo nº 2138, Centro</h4>
+        <h4>77 500 000 Porto Nacional – TO</h4>
+        <h4>Fone: 63 3363 5774 E-mail: semas.portonacional.to@gmail.com</h4>
+    </hgroup>
 </div>
 </body>
 </html>

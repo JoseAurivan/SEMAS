@@ -8,11 +8,23 @@
 <form asp-action="Alterar" method="post">
     @for (var i = 0; i < Model.PessoaEnderecos.Count; i++)
     {
-        <p class="lead">CPF do Morador</p>
+        <p class="lead">Dados do Morador</p>
         <div class="form-row">
             <div class="col-md-3 mb-3">
-                <label for="validationTooltip01">CPF:</label>
-                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Cpf" id="validationTooltip01" placeholder="Nome do Estado" readonly>
+                <label for="validationTooltip01">Nome:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Nome" id="validationTooltip01" placeholder="Nome do Estado">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Email:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Email" id="validationTooltip01" placeholder="Nome do Estado">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Telefone:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Telefone" id="validationTooltip01" placeholder="Nome do Estado">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">RG:</label>
+                <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Rg" id="validationTooltip01" placeholder="Nome do Estado">
             </div>
             <div class="col-md-3 mb-3">
                 <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Id" id="validationTooltip01" placeholder="Nome do Estado" hidden readonly>
@@ -57,4 +69,6 @@
             </div>
         </div>
     }
+    <button class="btn  btn-outline-success" type="submit">Enviar</button>
+    <button class="btn  btn-outline-warning" type="reset">Limpar</button>
 </form>
