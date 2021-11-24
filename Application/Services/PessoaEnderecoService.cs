@@ -195,6 +195,7 @@ namespace Application.Services
                 var pessoaEndereco = await _context.PessoaEnderecos
                     .AsNoTracking()
                     .Include(x => x.Pessoa)
+                    .ThenInclude(x => x.CadastroCmas)
                     .Include(x => x.Endereco)
                     .FirstOrDefaultAsync(x => x.PessoaId == idPessoa);
 
@@ -213,6 +214,7 @@ namespace Application.Services
                     .AsNoTracking()
                     .Include(x => x.Pessoa)
                     .ThenInclude(x => x.Pessoa)
+                    .ThenInclude(x => x.CadastroCmas)
                     .Include(x => x.Cesta)
                     .ThenInclude(x => x.Entregas)
                     .FirstOrDefaultAsync(x => x.Pessoa.Contains(pessoaEndereco));

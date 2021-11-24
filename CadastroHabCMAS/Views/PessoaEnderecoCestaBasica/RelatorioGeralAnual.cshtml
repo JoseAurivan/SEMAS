@@ -12,16 +12,25 @@
     <title>Relatório de controle</title>
     <style>
         .center{
-            margin: auto;
-            width: 50%;
+            margin: 0;
+            width: 100%;
             padding: 10px;
         }
+
         table, th, td{
             margin: 5px;
             border: 1px solid black;
         }
+        td{
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            word-wrap: break-word;
+        }
         hgroup{
             text-align: center;
+            margin: auto;
+            width: 50%;
+            padding: 10px;
         }
         table{
             table-layout: fixed;
@@ -29,20 +38,19 @@
     </style>
 </head>
 <body>
+
+<hgroup>
+    <h3>CONTROLE DOS KITS ALIMENTAÇÃO - DOADAS PELO GOVERNO DO ESTADO DO TOCANTINS - @Model.Ano</h3>
+    <h5>SECRETARIA DE ASSITENCIA SOCIAL (SEMAS)</h5>
+</hgroup>
 <div class="center">
-    <hgroup>
-        <h3>CONTROLE DOS KITS ALIMENTAÇÃO - DOADAS PELO GOVERNO DO ESTADO DO TOCANTINS - @Model.Ano</h3>
-        <h5>SECRETARIA DE ASSITENCIA SOCIAL (SEMAS)</h5>
-    </hgroup>
     <table>
         <tr>
-            <td>Unidade de Entrega</td>
+            <td>Departamento</td>
             <td>Nome</td>
             <td>CPF</td>
-            <td>Endereco</td>
-            <td>Telefone</td>
+            <td>RG</td>
             <td>Data Entrega</td>
-            <td>Assinatura</td>
         </tr>
         @for (int i = 0; i < Model.PessoaEnderecos.Count; i++)
         {
@@ -60,15 +68,11 @@
                                     <td>@Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).Unidade</td>
                                     <td>@Model.PessoaEnderecos[i].Pessoa.Nome</td>
                                     <td>@Model.PessoaEnderecos[i].Pessoa.Cpf</td>
-                                    <td>@Model.PessoaEnderecos[i].Endereco.Complemento</td>
-                                    <td>@Model.PessoaEnderecos[i].Pessoa.Telefone</td>
+                                    <td>@Model.PessoaEnderecos[i].Pessoa.Rg</td>
                                     <td>
                                         @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).NomeAgente
                                         <b>-</b>
                                         @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega
-                                    </td>
-                                    <td>
-
                                     </td>
                                 </tr>
                             }

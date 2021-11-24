@@ -111,9 +111,18 @@ namespace CadastroHabCMAS.Controllers
                         viewModel.Endereco = end.Result;
                         viewModel.Nome = end.Result.Pessoa.ElementAt(0).Pessoa.Nome;
                         viewModel.Bairro = end.Result.Bairro;
+                        viewModel.Cidade = end.Result.Cidade;
+                        viewModel.Sexo = end.Result.Pessoa.ElementAt(0).Pessoa.Sexo;
                         viewModel.Cep = end.Result.Cep;
                         viewModel.Cpf = end.Result.Pessoa.ElementAt(0).Pessoa.Cpf;
                         viewModel.Complemento = end.Result.Complemento;
+                        viewModel.Nis = end.Result.Pessoa.ElementAt(0).Pessoa.CadastroCmas.Nis;
+                        viewModel.Familia = end.Result.Pessoa.ElementAt(0).Pessoa.CadastroCmas.Familia;
+                        viewModel.Inseguranca = end.Result.Pessoa.ElementAt(0).Pessoa.CadastroCmas.Inseguranca;
+                        viewModel.Beneficio = end.Result.Pessoa.ElementAt(0).Pessoa.CadastroCmas.Beneficio;
+                        viewModel.Sanitizacao = end.Result.Pessoa.ElementAt(0).Pessoa.CadastroCmas.Sanitizacao;
+                        viewModel.Telefone = end.Result.Pessoa.ElementAt(0).Pessoa.Telefone;
+                        viewModel.Rg = end.Result.Pessoa.ElementAt(0).Pessoa.Rg;
                         viewModel.Entregas = (List<Entrega>)end.Result.Cesta.Entregas;
 
                         return View(nameof(PV_Visualizar), viewModel);
@@ -404,6 +413,11 @@ namespace CadastroHabCMAS.Controllers
             return LidarComErro(result, viewModel, nameof(VisualizarAnual));
         }
 
+        [HttpPost]
+        public IActionResult FichaCadasto(VisualizarCestaBasicaViewModel viewModel)
+        {
+            return View(nameof(FichaCadasto),viewModel);
+        }
 
     }
 }

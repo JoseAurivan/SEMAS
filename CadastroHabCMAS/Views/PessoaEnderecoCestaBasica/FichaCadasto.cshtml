@@ -1,0 +1,78 @@
+﻿@model CadastroHabCMAS.ViewModel.CestasBasicasViewModels.VisualizarCestaBasicaViewModel
+@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <title>Relatorio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="~/css/site.css" rel="stylesheet">
+    <style>
+        input, select{
+            text-decoration: none;
+            font-weight: bold;
+            border: none;           
+        }
+        input:focus{
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-left: 80px; margin-right: 80px">
+    <h3 class="text-center">FICHA DE CADASTRO SEMAS</h3>
+    <h5 class="text-center">SECRETARIA DE ASSITENCIA SOCIAL (SEMAS)</h5>
+    <br><br><br>
+    <p>
+        Nome: <input asp-for="Nome" id="nome"> <br/>
+        Sexo: <input asp-for="Sexo" id="sexo"> CPF: <input asp-for="Cpf" id="cpf"> <br/>
+        Telefone: <input asp-for="Telefone" id="telefone"> <br/>
+        Nis: <input asp-for="Nis" id="nis"> <br/>
+        Cidade: <input asp-for="Cidade" id="cidade"> Endereço: <input asp-for="Complemento" id="complemento"><br/>
+        Bairro: <input asp-for="Bairro" id="bairro"> CEP: <input asp-for="Cep" id="cep"> <br/>
+        Tipo de Endereço: <input asp-for="TipoEndereco" id="tipoEndereco"/> <br/>
+        Residencia <input asp-for="Residencia" id="residencia"> <br/>
+        Família: <input asp-for="Familia" id="familia"/> <br/>
+
+        Família passando por insegurança:
+        <select asp-for="Inseguranca">
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select><br/>
+        Recebeu algum beneficio:
+        <select asp-for="Beneficio">
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select><br/>
+        Residência precisa de sanitização:
+        <select asp-for="Sanitizacao">
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select>
+    </p>
+    <br><br><br><br><br/><br/><br/>
+    ------------------------------------------------------------------------------------------------
+    <br>
+
+    <h5 class="text-center">ASSINATURA</h5>
+</div>
+</body>
+<script>
+    window.onload = function() {
+     document.getElementById("nome").setAttribute('size',document.getElementById("nome").value.length);
+     document.getElementById("complemento").setAttribute('size',document.getElementById("complemento").value.length);
+     document.getElementById("cidade").setAttribute('size',document.getElementById("cidade").value.length);
+     document.getElementById("bairro").setAttribute('size',document.getElementById("bairro").value.length);
+     document.getElementById("cep").setAttribute('size',document.getElementById("cep").value.length);
+     document.getElementById("cpf").setAttribute('size',document.getElementById("cpf").value.length);
+     document.getElementById("familia").setAttribute('size',document.getElementById("familia").value.length);
+     document.getElementById("nis").setAttribute('size',document.getElementById("nis").value.length);
+     document.getElementById("residencia").setAttribute('size', document.getElementById("residencia").value.length);
+     document.getElementById("tipoEndereco").setAttribute('size', document.getElementById("tipoEndereco").value.length);
+     document.getElementById("telefone").setAttribute('size', document.getElementById("telefone").value.length);
+     document.getElementById("sexo").setAttribute('size', document.getElementById("sexo").value.length);
+     window.print();
+    };
+</script>
+</html>

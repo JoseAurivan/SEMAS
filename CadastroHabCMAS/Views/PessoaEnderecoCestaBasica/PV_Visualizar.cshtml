@@ -29,5 +29,21 @@
             </select>
         </div>
     </div>
-    <input type="submit" class="btn-info" value="Gerar Relatório"/>
+    <input type="submit" class="btn-info btn-success" value="Gerar Relatório"/>
+</form>
+<br/>
+<form asp-action="FichaCadasto" method="post">
+    <input asp-for="Nome" hidden>
+    <input asp-for="Complemento" hidden>
+    <input asp-for="Bairro" hidden>
+    <input asp-for="Cep" hidden>
+    <input asp-for="Cpf" hidden>
+    <input asp-for="Familia" hidden/>
+    <input asp-for="Nis" hidden/>
+    <input asp-for="Cidade" hidden/>
+    <input asp-for="Telefone" hidden/>
+    <input asp-for="TipoEndereco" hidden/>
+    <input asp-for="Residencia" hidden/>
+    <input asp-for="Sexo" hidden/>
+    <input type="submit" class="btn-info btn-success" value="Gerar Ficha de Cadastro da SEMAS"/>
 </form>
