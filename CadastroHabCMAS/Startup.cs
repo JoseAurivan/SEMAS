@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using Services;
 
 namespace CadastroHabCMAS
@@ -43,7 +45,7 @@ namespace CadastroHabCMAS
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => options.LoginPath = "/login");
 
-        }
+        }   
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,8 +69,6 @@ namespace CadastroHabCMAS
             app.UseAuthentication();
             
             app.UseAuthorization();
-            
-            
             
             
             app.UseEndpoints(endpoints =>

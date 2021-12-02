@@ -22,6 +22,8 @@ namespace Application.Services
 
         public async Task<ServiceResult> LoginAsync(string username, string password)
         {
+            
+            _logger.LogInformation("Tentando acessar login");
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x =>
@@ -32,6 +34,7 @@ namespace Application.Services
                     {
                         Messages = new[] {"Usuário não encontrado"}
                     };
+                _logger.LogInformation("Login foi um sucesso: usuario {@user} foi logado no sistema",user);
                 return new ServiceResult<int>(ServiceResultType.Success)
                 {
                     Result = user.Id
@@ -178,6 +181,7 @@ namespace Application.Services
 
         public async Task<ServiceResult> FindCpfAsync(string username)
         {
+            _logger.LogInformation("Buscando pelo CPF: "+username);
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
@@ -188,7 +192,7 @@ namespace Application.Services
                         Messages = new[] {"Usuário não encontrado"}
                     };
                 }
-
+                _logger.LogInformation("CPF ("+username+") encontrado");
                 return new ServiceResult<User>(ServiceResultType.Success)
                 {
                     Result = user

@@ -14,20 +14,26 @@ using CadastroHabCMAS.ViewModel.EnderecoViewModels;
 using CadastroHabCMAS.ViewModel.PessoaEnderecoViewModel;
 using CadastroHabCMAS.Views.PessoaEndereco;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using Services.DataStructures;
 
 namespace CadastroHabCMAS.Controllers
 {
+    [Authorize]
     public class PessoaEnderecoCestaBasicaController : CustomControllerBase
     {
         private readonly IPessoaEnderecoService _pessoaEnderecoService;
         private readonly ICadastroCmasService _cmasService;
         private readonly IWebHostEnvironment _environment;
+
 
         public PessoaEnderecoCestaBasicaController(IPessoaEnderecoService pessoaEnderecoService,
             ICadastroCmasService cmasService, IWebHostEnvironment environment)
@@ -35,10 +41,12 @@ namespace CadastroHabCMAS.Controllers
             _pessoaEnderecoService = pessoaEnderecoService;
             _cmasService = cmasService;
             _environment = environment;
+
         }
 
         public IActionResult Cadastro()
         {
+
             return View();
         }
 
@@ -55,7 +63,7 @@ namespace CadastroHabCMAS.Controllers
             var endereco = pessoaEndereco.ToModelEndereco(pessoaEndereco.Estado, pessoaEndereco.Cidade,
                 pessoaEndereco.Cep, pessoaEndereco.Bairro, pessoaEndereco.Complemento);
 
-            var result = await _pessoaEnderecoService.SavePessoa(pessoa, endereco);
+            var result = await _pessoaEnderecoService.SavePessoa(pessoa, endereco, User.Identity.Name);
             if (result.Type is ServiceResultType.Success)
             {
                 return View(nameof(Sucesso));
@@ -67,6 +75,10 @@ namespace CadastroHabCMAS.Controllers
         [HttpPost]
         public async Task<IActionResult> EncontrarCpf(string cpf, string typeOf)
         {
+            
+
+            
+
             var result = await _pessoaEnderecoService.SearchForCpfAsync(cpf);
 
             if (result is ServiceResult<Pessoa> resultado && resultado.Type == ServiceResultType.Success)
@@ -188,7 +200,7 @@ namespace CadastroHabCMAS.Controllers
                 var endereco = enderecoAddViewModel.ToModelEndereco(enderecoAddViewModel.Estado,
                     enderecoAddViewModel.Cidade, enderecoAddViewModel.Cep
                     , enderecoAddViewModel.Bairro, enderecoAddViewModel.Complemento, enderecoAddViewModel.TipoEndereco);
-                await _pessoaEnderecoService.SavePessoa(pessoa, endereco);
+                await _pessoaEnderecoService.SavePessoa(pessoa, endereco, User.Identity.Name);
                 return View(nameof(Sucesso));
             }
 
@@ -216,7 +228,7 @@ namespace CadastroHabCMAS.Controllers
                     pessoaEndereco.EnderecoId = pessoaEndereco.Endereco.Id;
                     pessoaEndereco.Pessoa = pessoa;
                     pessoaEndereco.PessoaId = pessoaEndereco.Pessoa.Id;
-                    await _pessoaEnderecoService.SavePessoaEndereco(pessoaEndereco);
+                    await _pessoaEnderecoService.SavePessoaEndereco(pessoaEndereco,User.Identity.Name);
                 }
             }
 
@@ -263,7 +275,7 @@ namespace CadastroHabCMAS.Controllers
                     {
                         if (arquivo != null || arquivo.Length != 0)
                         {
-                            // Define um nome para o arquivo enviado incluindo o sufixo obtido de milesegundos
+                            // Define um nome para o arquivo enviado incluindo o sufixo obtido de milissegundos
                             string nomeArquivo = "Usuario_arquivo_" + viewModel.IdPessoa + "_" +
                                                  endereco.Pessoa.ElementAt(0).Pessoa.Nome;
                             //verifica qual o tipo de arquivo : jpg, gif, png, pdf ou tmp
@@ -298,7 +310,7 @@ namespace CadastroHabCMAS.Controllers
                     cestaBasica.Entregas.Add(entrega);
                 }
 
-                await _pessoaEnderecoService.SaveCestaBasica(endereco, cestaBasica);
+                await _pessoaEnderecoService.SaveCestaBasica(endereco, cestaBasica, User.Identity.Name);
                 return View(nameof(Sucesso));
             }
 

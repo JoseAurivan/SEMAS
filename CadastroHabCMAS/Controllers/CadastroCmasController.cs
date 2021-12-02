@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Application.Enums;
@@ -8,31 +9,37 @@ using CadastroHabCMAS.ViewModel.CadastroCMASViewModels;
 using CadastroHabCMAS.ViewModel.EnderecoViewModels;
 using CadastroHabCMAS.Views.PessoaEndereco;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Services.DataStructures;
 
 namespace CadastroHabCMAS.Controllers
 {
+    [Authorize]
     public class CadastroCmasController : CustomControllerBase
     {
         private readonly ICadastroCmasService _cmasService;
         private readonly IPessoaEnderecoService _pessoaEnderecoService;
-
         public CadastroCmasController(ICadastroCmasService cmasService, IPessoaEnderecoService pessoaEnderecoService)
         {
             _cmasService = cmasService;
             _pessoaEnderecoService = pessoaEnderecoService;
+
         }
 
         // GET
         public IActionResult Adicionar()
         {
+            var identity = User.Identity.Name;
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> PV_AddCadastro(CadastroCmasAddViewModel cadastroCmasAddViewModel)
         {
+            
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("Error", "Cadastro incompleto, campos estao faltando");
@@ -48,7 +55,7 @@ namespace CadastroHabCMAS.Controllers
                     , cadastroCmasAddViewModel.Residencia, cadastroCmasAddViewModel.Localidade,
                     cadastroCmasAddViewModel.Beneficio,
                     cadastroCmasAddViewModel.Familia, cadastroCmasAddViewModel.Sanitizacao);
-                await _cmasService.SaveCadastro(pessoa,cadastro);
+                await _cmasService.SaveCadastro(pessoa,cadastro,User.Identity.Name);
                 return View(nameof(Sucesso));
             }
 
@@ -64,7 +71,7 @@ namespace CadastroHabCMAS.Controllers
         public async Task<IActionResult> ListarCadastros()
         {
             ListarCadastrosViewModel listarCadastrosViewModel = new ListarCadastrosViewModel();
-            var result = await _cmasService.ListCadastro();
+            var result = await _cmasService.ListCadastro(User.Identity.Name);
             if (result is ServiceResult<List<PessoaEndereco>> cadastros && result.Type == ServiceResultType.Success)
             {
                 listarCadastrosViewModel.CadastroCmasList = cadastros.Result;
@@ -130,7 +137,7 @@ namespace CadastroHabCMAS.Controllers
                     ent.CestaBasica = cestaBasica;
                 }
 
-                await _pessoaEnderecoService.UpdateCestaBasica(cestaBasica);
+                await _pessoaEnderecoService.UpdateCestaBasica(cestaBasica,User.Identity.Name);
                 return View(nameof(Sucesso));
             }
 

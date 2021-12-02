@@ -7,6 +7,7 @@ using Application.Services.Interfaces;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using Services.DataStructures;
 
 namespace Application.Services
@@ -22,11 +23,13 @@ namespace Application.Services
             _context = context;
         }
 
-        public async Task<ServiceResult> SaveCadastro(Pessoa pessoa, CadastroCmas cadastroCmas)
+        public async Task<ServiceResult> SaveCadastro(Pessoa pessoa, CadastroCmas cadastroCmas, string? username)
         {
+            
             try
             {
-                return await TrySaveCadastro(pessoa, cadastroCmas);
+                _logger.LogInformation("Usuário: "+username+" tentando salvar/alterar pessoa");
+                return await TrySaveCadastro(pessoa, cadastroCmas, username);
             }
             catch (Exception e)
             {
@@ -84,7 +87,7 @@ namespace Application.Services
 
         }
 
-        public async Task<ServiceResult> ListCadastro()
+        public async Task<ServiceResult> ListCadastro(string? username)
         {
             try
             {
@@ -103,6 +106,7 @@ namespace Application.Services
                         Messages = new []{"Nenhuma Pessoa foi cadastrada na base de dados da SEMAS"}
                     };
                 }
+                _logger.LogInformation(username + " Listou os cadastros da SEMAS");
 
                 return new ServiceResult<List<PessoaEndereco>>(ServiceResultType.Success)
                 {
@@ -119,7 +123,7 @@ namespace Application.Services
             }
         }
 
-        private async Task<ServiceResult> TrySaveCadastro(Pessoa pessoa, CadastroCmas cadastroCmas)
+        private async Task<ServiceResult> TrySaveCadastro(Pessoa pessoa, CadastroCmas cadastroCmas, string? username)
         {
             
             if (pessoa is null || cadastroCmas is null)
@@ -139,6 +143,7 @@ namespace Application.Services
 
             _context.Entry(pessoa).State = EntityState.Modified;
             
+            _logger.LogInformation(username + "salvou/alterou  a pessoa {@pessoa}",pessoa);
             await _context.SaveChangesAsync();
             return new ServiceResult<int>(ServiceResultType.Success)
             {

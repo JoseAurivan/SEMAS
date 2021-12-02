@@ -23,11 +23,11 @@ namespace Application.Services
             _logger = logger;
         }
 
-        public async Task<ServiceResult> SavePessoa(Pessoa pessoa, Endereco endereco)
+        public async Task<ServiceResult> SavePessoa(Pessoa pessoa, Endereco endereco, string? username)
         {
             try
             {
-                return await TrySavePessoa(pessoa, endereco);
+                return await TrySavePessoa(pessoa, endereco, username);
             }
             catch (Exception e)
             {
@@ -39,7 +39,7 @@ namespace Application.Services
             }
         }
 
-        private async Task<ServiceResult> TrySavePessoa(Pessoa pessoa, Endereco endereco)
+        private async Task<ServiceResult> TrySavePessoa(Pessoa pessoa, Endereco endereco, string? username)
         {
             if (pessoa is null || endereco is null)
             {
@@ -57,6 +57,7 @@ namespace Application.Services
 
             if (endereco.Id == default) _context.Enderecos.Add(endereco);
             else _context.Entry(endereco).State = EntityState.Modified;
+            
 
             PessoaEndereco pe = new PessoaEndereco();
             pe.Pessoa = pessoa;
@@ -65,6 +66,8 @@ namespace Application.Services
             _context.PessoaEnderecos.Add(pe);
 
             await _context.SaveChangesAsync();
+            
+            _logger.LogInformation(username+" salvou uma nova pessoa e endereco - {@pe}",pe);
             return new ServiceResult<int>(ServiceResultType.Success)
             {
                 Result = pessoa.Id
@@ -172,11 +175,11 @@ namespace Application.Services
             }
         }
 
-        public async Task<ServiceResult> SaveCestaBasica(Endereco endereco, CestaBasica cestaBasica)
+        public async Task<ServiceResult> SaveCestaBasica(Endereco endereco, CestaBasica cestaBasica, string? username)
         {
             try
             {
-                return await TrySaveCestaBasica(endereco, cestaBasica);
+                return await TrySaveCestaBasica(endereco, cestaBasica, username);
             }
             catch (Exception e)
             {
@@ -282,11 +285,11 @@ namespace Application.Services
             }
         }
 
-        public async Task<ServiceResult> SavePessoaEndereco(PessoaEndereco pessoaEndereco)
+        public async Task<ServiceResult> SavePessoaEndereco(PessoaEndereco pessoaEndereco, string? username)
         {
             try
             {
-                return await TrySavePessoaEndereco(pessoaEndereco);
+                return await TrySavePessoaEndereco(pessoaEndereco, username);
             }
             catch (Exception e)
             {
@@ -372,11 +375,11 @@ namespace Application.Services
             }
         }
 
-        public async Task<ServiceResult> UpdateCestaBasica(CestaBasica cestaBasica)
+        public async Task<ServiceResult> UpdateCestaBasica(CestaBasica cestaBasica, string? username)
         {
             try
             {
-                return await TryUpdateCestaBasica(cestaBasica);
+                return await TryUpdateCestaBasica(cestaBasica, username);
             }
             catch (Exception e)
             {
@@ -610,7 +613,7 @@ namespace Application.Services
             }
         }
 
-        private async Task<ServiceResult> TryUpdateCestaBasica(CestaBasica cestaBasica)
+        private async Task<ServiceResult> TryUpdateCestaBasica(CestaBasica cestaBasica, string? username)
         {
             if (cestaBasica is null)
                 return new ServiceResult(ServiceResultType.InternalError)
@@ -629,13 +632,14 @@ namespace Application.Services
             }
 
             await _context.SaveChangesAsync();
+            _logger.LogInformation(username + " salvou/alterou {@cesta}",cestaBasica);
             return new ServiceResult<int>(ServiceResultType.Success)
             {
                 Result = cestaBasica.Id
             };
         }
 
-        private async Task<ServiceResult> TrySavePessoaEndereco(PessoaEndereco pessoaEndereco)
+        private async Task<ServiceResult> TrySavePessoaEndereco(PessoaEndereco pessoaEndereco, string? username)
         {
             if (pessoaEndereco is null)
                 return new ServiceResult(ServiceResultType.InternalError)
@@ -655,13 +659,14 @@ namespace Application.Services
             _context.Entry(pessoaEndereco.Endereco).State = EntityState.Modified;
             _context.Entry(pessoaEndereco.Pessoa).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            _logger.LogInformation(username + " salvou/alterou {@pessoaEndereco}",pessoaEndereco);
             return new ServiceResult<int>(ServiceResultType.Success)
             {
                 Result = pessoaEndereco.EnderecoId
             };
         }
 
-        private async Task<ServiceResult> TrySaveCestaBasica(Endereco endereco, CestaBasica cestaBasica)
+        private async Task<ServiceResult> TrySaveCestaBasica(Endereco endereco, CestaBasica cestaBasica, string? username)
         {
             if (endereco is null || cestaBasica is null)
                 return new ServiceResult(ServiceResultType.InternalError)
@@ -683,6 +688,7 @@ namespace Application.Services
 
             _context.Entry(endereco).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            _logger.LogInformation(username+" adicionou ou alterou {@cesta}", cestaBasica);
             return new ServiceResult<int>(ServiceResultType.Success)
             {
                 Result = cestaBasica.Id
