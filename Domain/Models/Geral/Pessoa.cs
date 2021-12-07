@@ -20,6 +20,8 @@ namespace Domain.Models
         public Sexo Sexo { get; set; }
         public CadastroCmas CadastroCmas { get; set; }
         public virtual ICollection<PessoaEndereco> Enderecos { get; set; }
+        
+        public Curriculo? Curriculo { get; set; }
 
         public override bool Equals(object obj)
         {
