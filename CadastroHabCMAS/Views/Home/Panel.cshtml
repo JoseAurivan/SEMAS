@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@using Domain.Enums
+@model CadastroHabCMAS.ViewModel.UserViewModel.UserLoginViewModel;
+@{
     ViewData["Title"] = "Painel de Controle";
     Layout = "_Layout";
 }
@@ -8,7 +11,7 @@
     <link href="~/css/site.css" rel="stylesheet">
     <style>
         body{
-         background-color: #E8EEF1;
+            background-color: #E8EEF1;
         }
         .flex-container{
             display: flex;
@@ -25,7 +28,7 @@
             background-color:#006e80;
         }
         .card{
-         background-color: #51a8b1;   
+            background-color: #51a8b1;   
         }
         #fazenda-header{
             background-color: #1e7e34;
@@ -39,9 +42,16 @@
         #dois-body {
             background-color: #e6c60d;
         }
+        #trabalho-header{
+            background-color: #6A5ACD;    
+        }
+        #trabalho-body{
+            background-color: #9370DB;                        
+        }
     </style>
 </head>
 <div class="flex-container">
+
     <div class="card" style="width: 18rem;">
         <div class="card-header" id="dois-header">
             Cadastro de Pessoas
@@ -52,76 +62,103 @@
         </div>
     </div>
     <div class="card" style="width: 18rem;">
-        <div class="card-header" id="fazenda-header">
+        <div class="card-header" id="dois-header">
             Alterar Cadastro
         </div>
-        <div class="card-body" id="fazenda-body">
+        <div class="card-body" id="dois-body">
             <p class="card-text">Altere o Cadastro de uma pessoa já cadastrada em nosso sistema</p>
             <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Alterar" class="btn btn-outline-light">Alterar</a>
         </div>
     </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header" id="fazenda-header">
-            Adicionar Endereço
+    @if (Model.Role == Roles.Fazenda || Model.Role == Roles.Adminstrador)
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-header" id="fazenda-header">
+                Adicionar Endereço
+            </div>
+            <div class="card-body" id="fazenda-body">
+                <p class="card-text">Adicione um Endereço a uma pessoa já cadastrada em nosso sistema</p>
+                <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Adicionar" class="btn btn-outline-light">Registrar</a>
+            </div>
         </div>
-        <div class="card-body" id="fazenda-body">
-            <p class="card-text">Adicione um Endereço a uma pessoa já cadastrada em nosso sistema</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Adicionar" class="btn btn-outline-light">Registrar</a>
+    }
+    @if (Model.Role == Roles.Semas || Model.Role == Roles.Adminstrador)
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Cadastro da SEMAS
+            </div>
+            <div class="card-body">
+                <p class="card-text">Cadastre uma pessoa ja existente na SEMAS para recebimento de cestas basicas</p>
+                <a asp-controller="CadastroCmas" asp-action="Adicionar" class="btn btn-outline-light">Registrar</a>
+            </div>
         </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Cadastro da SEMAS
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Adicionar uma cesta básica
+            </div>
+            <div class="card-body">
+                <p class="card-text">Conceda uma cesta básica a uma pessoa que já possui um cadastro na SEMAS.</p>
+                <a asp-controller="PessoaEnderecoCestaBasica" asp-action="AdicionarCestaBasica" class="btn btn-outline-light">Registrar</a>
+            </div>
         </div>
-        <div class="card-body">
-            <p class="card-text">Cadastre uma pessoa ja existente na SEMAS para recebimento de cestas basicas</p>
-            <a asp-controller="CadastroCmas" asp-action="Adicionar" class="btn btn-outline-light">Registrar</a>
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Verificar todos os cadastros
+            </div>
+            <div class="card-body">
+                <p class="card-text">Veja o CPF e o NIS de todos os cadastrados em nosso sistema e insira informações das entregas</p>
+                <a asp-controller="CadastroCmas" asp-action="ListarCadastros" class="btn btn-outline-light">Registrar</a>
+            </div>
         </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Adicionar uma cesta básica
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Gerar Declaração de Recebimento e Fichas de Cadastro
+            </div>
+            <div class="card-body">
+                <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas ou suas fichas de cadastro</p>
+                <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Visualizar" class="btn btn-outline-light">Gerar</a>
+            </div>
         </div>
-        <div class="card-body">
-            <p class="card-text">Conceda uma cesta básica a uma pessoa que já possui um cadastro na SEMAS.</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="AdicionarCestaBasica" class="btn btn-outline-light">Registrar</a>
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Consultar Relatório Mensal de Cestas Básicas
+            </div>
+            <div class="card-body">
+                <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas de uma determinada unidade em um determinado Mês</p>
+                <a asp-controller="PessoaEnderecoCestaBasica" asp-action="VisualizarMensal" class="btn btn-outline-light">Consultar</a>
+            </div>
         </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Verificar todos os cadastros
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Consultar Relatório Anual de Cestas Básicas
+            </div>
+            <div class="card-body">
+                <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas de uma determinada unidade em um determinado Ano</p>
+                <a asp-controller="PessoaEnderecoCestaBasica" asp-action="VisualizarAnual" class="btn btn-outline-light">Consultar</a>
+            </div>
         </div>
-        <div class="card-body">
-            <p class="card-text">Veja o CPF e o NIS de todos os cadastrados em nosso sistema e insira informações das entregas</p>
-            <a asp-controller="CadastroCmas" asp-action="ListarCadastros" class="btn btn-outline-light">Registrar</a>
+    }
+    @if (Model.Role == Roles.Trabalho || Model.Role == Roles.Adminstrador)
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-header" id="trabalho-header">
+                Cadastrar um curriculo de uma Pessoa
+            </div>
+            <div class="card-body" id="trabalho-body">
+                <p class="card-text">Cadastre um currículo para uma determinada pessoa</p>
+                <a asp-controller="DiretoriaTrabalho" asp-action="CriarCurriculo" class="btn btn-outline-light">Criar</a>
+            </div>
         </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Gerar Declaração de Recebimento e Fichas de Cadastro
+        <div class="card" style="width: 18rem;">
+            <div class="card-header" id="trabalho-header">
+                Alterar um curriculo de uma Pessoa
+            </div>
+            <div class="card-body" id="trabalho-body">
+                <p class="card-text">Altere um currículo para uma determinada pessoa</p>
+                <a class="btn btn-outline-light">Alterar</a>
+            </div>
         </div>
-        <div class="card-body">
-            <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas ou suas fichas de cadastro</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="Visualizar" class="btn btn-outline-light">Gerar</a>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Consultar Relatório Mensal de Cestas Básicas
-        </div>
-        <div class="card-body">
-            <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas de uma determinada unidade em um determinado Mês</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="VisualizarMensal" class="btn btn-outline-light">Consultar</a>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Consultar Relatório Anual de Cestas Básicas
-        </div>
-        <div class="card-body">
-            <p class="card-text">Veja e/ou gere relatórios das pessoas que foram contempladas com cestas basicas de uma determinada unidade em um determinado Ano</p>
-            <a asp-controller="PessoaEnderecoCestaBasica" asp-action="VisualizarAnual" class="btn btn-outline-light">Consultar</a>
-        </div>
-    </div>
-
+    }    
+    
 </div>

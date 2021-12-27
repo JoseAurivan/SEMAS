@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using CadastroHabCMAS.Models;
 using CadastroHabCMAS.ViewModel.LoginTi;
 using CadastroHabCMAS.ViewModel.UserViewModel;
+using Domain.Enums;
 using Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -71,18 +72,28 @@ namespace CadastroHabCMAS.Controllers
             }
 
             var result = await _userService.LoginAsync(userLoginViewModel.Username, userLoginViewModel.Password);
+            
             if (result.Type != ServiceResultType.Success)
                 return LidarComErro(result, userLoginViewModel, nameof(Index));
+            
+            if (result is ServiceResult<User> resultado)
+            {
+                if (resultado.Result.Roles != null) userLoginViewModel.Role = (Roles) resultado.Result.Roles;
+            }
+            else
+                return LidarComErro(result, userLoginViewModel, nameof(Index));
 
+                
             //TODO remodelar esse sistema
 
             var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, userLoginViewModel.Username));
             claims.Add(new Claim(ClaimTypes.Sid, userLoginViewModel.Password));
+            claims.Add(new Claim(ClaimTypes.Role, userLoginViewModel.Role.ToString()));
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await HttpContext.SignInAsync(claimsPrincipal);
-            return View(nameof(Panel));
+            return View(nameof(Panel), userLoginViewModel);
         }
 
         [Authorize]

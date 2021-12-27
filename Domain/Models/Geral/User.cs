@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Enums;
+using Domain.Interfaces;
 
 namespace Domain.Models
 {
@@ -9,5 +10,6 @@ namespace Domain.Models
         public string Password { get; set; } 
         public string Nome { get; set; }
         public string Email { get; set; }
+        public Roles? Roles { get; set; }
     }
 }

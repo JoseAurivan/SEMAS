@@ -35,9 +35,9 @@ namespace Application.Services
                         Messages = new[] {"Usuário não encontrado"}
                     };
                 _logger.LogInformation("Login foi um sucesso: usuario {@user} foi logado no sistema",user);
-                return new ServiceResult<int>(ServiceResultType.Success)
+                return new ServiceResult<User>(ServiceResultType.Success)
                 {
-                    Result = user.Id
+                    Result = user
                 };
 
             }

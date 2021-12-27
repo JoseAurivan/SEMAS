@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Enums;
 using Domain.Models;
 
 
@@ -14,7 +15,7 @@ namespace CadastroHabCMAS.ViewModel.UserViewModel
         [Required(ErrorMessage = "Campo Senha é obrigatório")]
         public string Password { get; set; }
         
-        
-        
+        public Roles Role { get; set; }
+
     }
 }
