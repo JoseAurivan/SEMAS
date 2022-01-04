@@ -12,6 +12,7 @@ using CadastroHabCMAS.ViewModel.CadastroCMASViewModels;
 using CadastroHabCMAS.ViewModel.CestasBasicasViewModels;
 using CadastroHabCMAS.ViewModel.EnderecoViewModels;
 using CadastroHabCMAS.ViewModel.PessoaEnderecoViewModel;
+using CadastroHabCMAS.ViewModel.PessoaEnderecoViewModels;
 using CadastroHabCMAS.Views.PessoaEndereco;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -145,8 +146,17 @@ namespace CadastroHabCMAS.Controllers
 
                 if (typeOf == "addPessoa")
                 {
-                    ModelState.AddModelError("Erro", "CPF ja cadastrado");
-                    return View(nameof(PV_Erro));
+                    CpfEncontradoViewModel viewModel = new CpfEncontradoViewModel();
+                    var pessoa = resultado.Result;
+                    var findResult = await _pessoaEnderecoService.SearchForEndereco(pessoa.Id);
+                    if (findResult is ServiceResult<Endereco> end && end.Type == ServiceResultType.Success)
+                    {
+                        viewModel.Endereco = end.Result;
+                        viewModel.Pessoa = end.Result.Pessoa.ElementAt(0).Pessoa;
+                        return View(nameof(PV_CpfEncontrado),viewModel);
+                    }
+                    return LidarComErro(findResult, viewModel, nameof(PV_Erro));
+                    
                 }
             }
 
@@ -170,6 +180,11 @@ namespace CadastroHabCMAS.Controllers
         }
 
         public ActionResult PV_EnderecosAdd()
+        {
+            return PartialView();
+        }
+
+        public ActionResult PV_CpfEncontrado()
         {
             return PartialView();
         }

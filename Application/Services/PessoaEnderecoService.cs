@@ -404,6 +404,7 @@ namespace Application.Services
                                 && x.DataEntrega.Value.Month == mes
                                 && x.DataEntrega.Value.Year == ano
                                 && x.EntregaStatus == StatusEntrega.Entregue)
+                    .OrderBy(x => x.DataEntrega)
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
@@ -459,6 +460,7 @@ namespace Application.Services
                                 && x.DataEntrega.Value.Month == mes
                                 && x.DataEntrega.Value.Year == ano
                                 && x.EntregaStatus == StatusEntrega.Entregue)
+                    .OrderBy(x => x.DataEntrega)
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
@@ -514,6 +516,7 @@ namespace Application.Services
                                 && x.DataEntrega.HasValue
                                 && x.DataEntrega.Value.Year == ano
                                 && x.EntregaStatus == StatusEntrega.Entregue)
+                    .OrderBy(x => x.DataEntrega)
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
@@ -568,6 +571,7 @@ namespace Application.Services
                     .Where(x =>x.DataEntrega.HasValue
                                 && x.DataEntrega.Value.Year == ano
                                 && x.EntregaStatus == StatusEntrega.Entregue)
+                    .OrderBy(x => x.DataEntrega)
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();

@@ -32,6 +32,14 @@
       <_ContentIncludedByDefault Remove="App\wwwroot\vanilla-masker-master\bankfacil_vanilla-masker\versions.json" />
       <_ContentIncludedByDefault Remove="App\wwwroot\vanilla-masker-master\bower.json" />
       <_ContentIncludedByDefault Remove="App\wwwroot\vanilla-masker-master\package.json" />
+      <_ContentIncludedByDefault Remove="App\App\web.config" />
+      <_ContentIncludedByDefault Remove="App\App\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="App\App\appsettings.json" />
+      <_ContentIncludedByDefault Remove="App\App\CadastroHabCMAS.deps.json" />
+      <_ContentIncludedByDefault Remove="App\App\CadastroHabCMAS.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="App\App\wwwroot\vanilla-masker-master\bankfacil_vanilla-masker\versions.json" />
+      <_ContentIncludedByDefault Remove="App\App\wwwroot\vanilla-masker-master\bower.json" />
+      <_ContentIncludedByDefault Remove="App\App\wwwroot\vanilla-masker-master\package.json" />
     </ItemGroup>
 
     <ItemGroup>

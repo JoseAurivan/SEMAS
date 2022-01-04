@@ -76,7 +76,7 @@
                                             {
                                                 @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).NomeAgente
                                                 <b>:</b>
-                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega
+                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega?.ToShortDateString();
                                                 <br>
                                                 <hr>
                                             }

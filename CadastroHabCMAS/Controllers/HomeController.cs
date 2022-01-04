@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -99,7 +100,15 @@ namespace CadastroHabCMAS.Controllers
         [Authorize]
         public IActionResult Panel()
         {
-            return View();
+            UserLoginViewModel userLoginViewModel = new UserLoginViewModel();
+            var username = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value.ToString();
+            var password = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value.ToString();
+            var role = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value.ToString();
+            userLoginViewModel.Username = username;
+            userLoginViewModel.Password = password;
+            userLoginViewModel.Role = Enum.Parse<Roles>(role);
+
+            return View(userLoginViewModel);
         }
 
         public IActionResult Contato()

@@ -11,12 +11,12 @@ namespace CadastroHabCMAS.Controllers
             return View();
         }
 
-        public IActionResult CriarCertificado()
+        public IActionResult PV_CriarCertificado()
         {
             return View();
         }
 
-        public IActionResult CriarExperiencia()
+        public IActionResult PV_CriarExperiencia()
         {
             return View();
         }
