@@ -318,7 +318,7 @@ namespace CadastroHabCMAS.Controllers
                 }
 
                 var cestaBasica = viewModel.ToModelCestaBasica(viewModel.NumeroMeses, viewModel.Quant,
-                    viewModel.DeterminacaoJuridica, viewModel.RecomendacaoTecnica, viewModel.Caminhos);
+                     viewModel.Caminhos, viewModel.Demandas);
                 for (int i = 0; i < int.Parse(cestaBasica.NumeroMeses); i++)
                 {
                     Entrega entrega = new Entrega();

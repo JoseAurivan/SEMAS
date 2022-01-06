@@ -17,7 +17,7 @@ namespace Domain.Models
         public bool? DeterminacaoJuridica { get; set; }
         public bool? RecomendacaoTecnica { get; set; }
         
-        //public Demandas? Demandas { get; set; }
+        public Demandas? Demandas { get; set; }
         public string? Caminhos { get; set; }
     }
 }

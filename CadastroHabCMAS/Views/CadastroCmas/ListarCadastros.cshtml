@@ -28,7 +28,6 @@
     <div asp-validation-summary="All"></div>
     @for (int i = 0; i < Model.CadastroCmasList.Count; i++)
     {
-
         <p class="lead">Cadastro</p>
         <div class="form-row">
             <div class="col-md-3 mb-3">
@@ -64,16 +63,31 @@
                 </div>
             </div>
         </div>
+
         @if (Model.CadastroCmasList[i].Endereco is not null)
         {
             @if (Model.CadastroCmasList[i].Endereco.Cesta is not null)
-            {
+            { 
+                @if (Model.CadastroCmasList[i].Endereco.Cesta.Demandas is not null)
+                {
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="validationTooltip01">Demanda:</label>
+                            <div class="input-group mb-3">
+                                <input type="text" asp-for="CadastroCmasList[i].Endereco.Cesta.Demandas" class="form-control" id="cpf" placeholder="Numero Entregas" aria-label="Recipient's username" readonly>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <label>Demanda não especificada</label>
+                }
                 @if (Model.CadastroCmasList[i].Endereco.Cesta.Entregas.Count > 0)
                 {
                     <p class="lead">Entregas</p>
                     @for (int j = 0; j < Model.CadastroCmasList[i].Endereco.Cesta.Entregas.Count; j++)
                     {
-                        
                         <div class="form-row">
                             <div class="col-md-3 mb-3">
                                 <label for="validationTooltip01">Unidade da Entrega:</label>

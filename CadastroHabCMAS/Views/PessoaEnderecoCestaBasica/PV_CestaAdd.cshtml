@@ -13,16 +13,19 @@
         </div>
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">Numero de Meses:</label>
-            <input type="number" asp-for="NumeroMeses"class="form-control" id="validationTooltip01" required>
+            <input type="number" asp-for="NumeroMeses" class="form-control" id="validationTooltip01" required>
         </div>
     </div>
-    <div class="form-check form-switch">
-        <input class="form-check-input" asp-for="DeterminacaoJuridica" type="checkbox" id="flexSwitchCheckDefault">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Determinação Jurídica</label>
-    </div>
-    <div class="form-check form-switch">
-        <input class="form-check-input" asp-for="RecomendacaoTecnica" type="checkbox" id="flexSwitchCheckDefault">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Recomendação Tecnica</label>
+    <div class="form-row">
+        <label for="validationTooltip01">Tipo de Demanda:</label>
+        <select asp-for="Demandas" class="form-select" aria-label="Default select example">
+            <option value="Espontanea">Espontanea</option>
+            <option value="PAEFI">PAEFI</option>
+            <option value="PAIF">PAIF</option>
+            <option value="Judicial">Judicial</option>
+            <option value="ConselhoTutelar">ConselhoTutelar</option>
+            <option value="SCFV">SCFV</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="exampleFormControlFile1">Anexos (Se houver)</label>

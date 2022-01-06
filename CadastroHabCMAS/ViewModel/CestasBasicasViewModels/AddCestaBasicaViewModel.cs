@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CadastroHabCMAS.Views.PessoaEndereco;
+using Domain.Enums;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -12,28 +13,27 @@ namespace CadastroHabCMAS.ViewModel.CestasBasicasViewModels
         public int Quant { get; set; }
         [Required]
         public string NumeroMeses { get; set; }
+        
+        public Demandas Demandas { get; set; }
 
         public Pessoa Pessoa { get; set; }
         public int IdPessoa { get; set; }
         
-        public bool DeterminacaoJuridica { get; set; }
-        public bool RecomendacaoTecnica { get; set; }
         
         public IFormFileCollection Anexos { get; set; }
         
         public string Caminhos { get; set; }
 
         public CestaBasica ToModelCestaBasica(string numeroMeses, int quantidade,
-            bool determinacaoJuridica, bool recomendacaoTecnica, string caminhos)
+            string caminhos, Demandas demanda)
         {
             return new CestaBasica()
             {
                 NumeroMeses = numeroMeses,
                 Quant = quantidade,
-                DeterminacaoJuridica = determinacaoJuridica,
-                RecomendacaoTecnica = recomendacaoTecnica,
-                Caminhos = caminhos
-                
+                Caminhos = caminhos,
+                Demandas = demanda
+
             };
         }
     }
