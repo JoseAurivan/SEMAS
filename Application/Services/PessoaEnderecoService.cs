@@ -238,6 +238,9 @@ namespace Application.Services
                 return new ServiceResult<Endereco>(ServiceResultType.Success)
                 {
                     Result = endereco
+                     
+                    
+                    
                 };
             }
             catch (Exception e)

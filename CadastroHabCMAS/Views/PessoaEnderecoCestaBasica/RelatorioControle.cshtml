@@ -78,9 +78,17 @@
                                                 <b>:</b>
                                                 @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega?.ToShortDateString()
                                                 <br>
-                                                <hr>
                                             }
                                         }
+                                        @if (Model.PessoaEnderecos[i].Endereco.Cesta.Demandas is not null)
+                                        {
+                                            @Model.PessoaEnderecos[i].Endereco.Cesta.Demandas
+                                        }
+                                        else
+                                        {
+                                            <b>Demanda nao cadastrada</b>
+                                        }
+                                        <hr>
                                     </td>
                                 </tr>
                             }

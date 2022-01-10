@@ -12,7 +12,7 @@
     <html>
     <head>
         <title>Relatório de controle</title>
-    <style>
+        <style>
         .center{
             margin: 0;
             width: 100%;
@@ -40,19 +40,19 @@
     </style>
     </head>
     <body>
- 
+
     <hgroup>
         <h3>CONTROLE DOS KITS ALIMENTAÇÃO - @Model.Ano</h3>
         <h5>SECRETARIA DE ASSITENCIA SOCIAL (SEMAS)</h5>
     </hgroup>
-       <div class="center">
+    <div class="center">
         <table>
             <tr>
-            <td>Departamento</td>
-            <td>Nome</td>
-            <td>CPF</td>
-            <td>RG</td>
-            <td>Data Entrega</td>
+                <td>Departamento</td>
+                <td>Nome</td>
+                <td>CPF</td>
+                <td>RG</td>
+                <td>Data Entrega</td>
             </tr>
             @if (Model.PessoaEnderecos != null)
             {
@@ -76,11 +76,21 @@
                                             {
                                                 @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).NomeAgente
                                                 <b>:</b>
-                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega?.ToShortDateString();
+                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega?.ToShortDateString()
+                                                ;
                                                 <br>
                                                 <hr>
                                             }
                                         }
+                                        @if (Model.PessoaEnderecos[i].Endereco.Cesta.Demandas is not null)
+                                        {
+                                            @Model.PessoaEnderecos[i].Endereco.Cesta.Demandas
+                                        }
+                                        else
+                                        {
+                                            <b>Demanda nao cadastrada</b>
+                                        }
+                                        <hr>
                                     </td>
                                 </tr>
                             }
