@@ -4,20 +4,55 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Database.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220113125849_DiretoriaTrabalhoCorrecao2.0")]
+    partial class DiretoriaTrabalhoCorrecao20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Domain.Models.Auditoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Exception")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogEvent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MessageTemplate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Properties")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("auditoria");
+                });
 
             modelBuilder.Entity("Domain.Models.CadastroCmas", b =>
                 {
@@ -79,7 +114,7 @@ namespace Database.Migrations
 
                     b.HasIndex("CurriculoId");
 
-                    b.ToTable("certificado");
+                    b.ToTable("Certificado");
                 });
 
             modelBuilder.Entity("Domain.Models.CestaBasica", b =>
@@ -127,7 +162,7 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("curriculo");
+                    b.ToTable("Curriculo");
                 });
 
             modelBuilder.Entity("Domain.Models.Endereco", b =>
@@ -223,7 +258,7 @@ namespace Database.Migrations
 
                     b.HasIndex("CurriculoId");
 
-                    b.ToTable("experiencia");
+                    b.ToTable("Experiencia");
                 });
 
             modelBuilder.Entity("Domain.Models.Pessoa", b =>

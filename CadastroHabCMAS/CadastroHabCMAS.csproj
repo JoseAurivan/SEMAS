@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <None Include="wwwroot\Prefeitura\04_Logomarca_Pref_Porto_Final_Horizontal_Em PNG (2).png" />
+      <None Remove="App\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -43,8 +44,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="App\Anexos" />
       <Folder Include="wwwroot\Arquivos\Arquivos_Usuario\Recebidos" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="App\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="App\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="App\**" />
     </ItemGroup>
 
 </Project>

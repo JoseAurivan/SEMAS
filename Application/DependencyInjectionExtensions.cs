@@ -12,8 +12,9 @@ namespace Application
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IEmailService, EmailService>()
                 .AddScoped<IPessoaEnderecoService, PessoaEnderecoService>()
-                .AddScoped<ICadastroCmasService, CadastroCmasService>();
-            
+                .AddScoped<ICadastroCmasService, CadastroCmasService>()
+                .AddScoped<ICurriculoService, CurriculoService>();
+
             return serviceCollection;
         }
     }

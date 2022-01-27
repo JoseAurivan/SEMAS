@@ -1,4 +1,5 @@
-﻿@model dynamic
+﻿@using CadastroHabCMAS.Controllers
+@model CadastroHabCMAS.ViewModel.DiretoriaDoTrabalhoViewModels.CadastroCurriculoViewModel
 
 @{
     ViewBag.Title = "title";
@@ -79,32 +80,52 @@
         <div class="form-row">
             <div class="col-md-6 mb-3">
                 <label for="validationTooltip01">Resumo:</label>
-                <input type="text" class="form-control" id="validationTooltip01" placeholder="Nome completo" required>
+                <input type="text" asp-for="Resumo" class="form-control" id="validationTooltip01" placeholder="Nome completo" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="validationTooltip02">Competências</label>
-                <input type="text" class="form-control" id="cpf" placeholder="Apenas valores numericos" required>
+                <input type="text" asp-for="Competencias" class="form-control"  placeholder="Apenas valores numericos" required>
             </div>
-
         </div>
-        
         <div class="form-row">
             <label for="validationTooltip02">Adicionar Certificados:</label>
         </div>
         <div class="form-row">
-            <button type="button" class="plus btn btn-dark"></button>
-            <button type="button" class="minus btn btn-dark"></button>
+            <button type="button" id="curriculo"  onclick="gerarPaginaCertificado()" class="plus btn btn-dark"></button>
+            <button type="button" class="minus btn btn-dark" hidden></button>
         </div>
-        
+        <div id="ToChange">
+
+        </div>
         <div class="form-row">
             <label for="validationTooltip02">Adicionar Currículos:</label>
         </div>
         <div class="form-row">
-            <button type="button" class="plus btn btn-dark"></button>
-            <button type="button" class="minus btn btn-dark"></button>
+            <button type="button" id="certificado" onclick="gerarPaginaExperiencia()"  class="plus btn btn-dark"></button>
+            <button type="button" class="minus btn btn-dark" hidden></button>
         </div>
-
+        <div id="tochange">
+            
+        </div>
         <button class="btn  btn-outline-success" type="submit">Enviar</button>
         <button class="btn  btn-outline-warning" type="reset">Limpar</button>
     </form>
 </div>
+
+
+
+@section Scripts
+{
+    <script>       
+        function gerarPaginaCertificado()
+        { 
+            $('#ToChange').load('@Url.Action("PV_CriarCertificado",Model)');                                             
+        }        
+        function gerarPaginaExperiencia()
+        {          
+            $('#tochange').load('@Url.Action("PV_CriarExperiencia",Model)');   
+        }
+    </script>
+}
+
+

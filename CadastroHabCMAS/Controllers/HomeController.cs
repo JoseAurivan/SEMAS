@@ -33,7 +33,7 @@ namespace CadastroHabCMAS.Controllers
             _emailService = emailService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Painel()
         {
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
@@ -60,7 +60,7 @@ namespace CadastroHabCMAS.Controllers
 
             var result = await _emailService.SendForgottenPasswordAsync(userEsqueciViewModel.Email);
             if (result.Type != ServiceResultType.Success) return LidarComErro(result, userEsqueciViewModel);
-            return View(nameof(Index));
+            return View(nameof(Painel));
         }
         
 
@@ -69,7 +69,7 @@ namespace CadastroHabCMAS.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(nameof(Index), userLoginViewModel);
+                return View(nameof(Painel), userLoginViewModel);
             }
 
             var result = await _userService.LoginAsync(userLoginViewModel.Username, userLoginViewModel.Password);
@@ -240,6 +240,11 @@ namespace CadastroHabCMAS.Controllers
 
             //TODO tratar erros com mensagens amigáveis
             return LidarComErro(task, userEditEmailViewModel, nameof(MudarEmail));
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }

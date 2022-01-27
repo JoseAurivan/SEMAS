@@ -25,7 +25,10 @@ namespace Database
         public DbSet<PessoaEndereco> PessoaEnderecos { get; set; }
         public DbSet<Entrega> Entregas { get; set; }
         
-        public DbSet<Auditoria> Auditorias { get; set; }
+        public DbSet<Curriculo> Curriculos { get; set; }
+        public DbSet<Experiencias> Experiencias { get; set; }
+        public DbSet<Certificado> Certificados { get; set; }
+        
         public Task SaveChangesAsync() => SaveChangesAsync(default);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,7 +40,9 @@ namespace Database
            modelBuilder.ApplyConfiguration(new CestaBasicaConfiguration());
            modelBuilder.ApplyConfiguration(new PessoaEnderecoConfiguration());
            modelBuilder.ApplyConfiguration(new EntregaConfiguration());
-           modelBuilder.ApplyConfiguration(new AuditoriaConfiguration());
+           modelBuilder.ApplyConfiguration(new CurriculoConfiguration());
+           modelBuilder.ApplyConfiguration(new CertificadoConfiguration());
+           modelBuilder.ApplyConfiguration(new ExperienciaConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

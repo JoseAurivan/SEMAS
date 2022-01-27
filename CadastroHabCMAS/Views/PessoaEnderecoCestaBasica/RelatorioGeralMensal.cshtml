@@ -47,6 +47,7 @@
 <div class="center">
     <table>
         <tr>
+            <td>Nº</td>
             <td>Unidade de Entrega</td>
             <td>Nome</td>
             <td>CPF</td>
@@ -67,6 +68,7 @@
                             @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).EntregaStatus == StatusEntrega.Entregue)
                             {
                                 <tr>
+                                    <td>@i</td>
                                     <td>@Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).Unidade</td>
                                     <td>@Model.PessoaEnderecos[i].Pessoa.Nome</td>
                                     <td>@Model.PessoaEnderecos[i].Pessoa.Cpf</td>

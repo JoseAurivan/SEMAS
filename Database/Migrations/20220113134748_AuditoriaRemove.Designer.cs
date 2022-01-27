@@ -4,14 +4,16 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Database.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220113134748_AuditoriaRemove")]
+    partial class AuditoriaRemove
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace Database.Migrations
 
                     b.HasIndex("CurriculoId");
 
-                    b.ToTable("certificado");
+                    b.ToTable("Certificado");
                 });
 
             modelBuilder.Entity("Domain.Models.CestaBasica", b =>
@@ -127,7 +129,7 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("curriculo");
+                    b.ToTable("Curriculo");
                 });
 
             modelBuilder.Entity("Domain.Models.Endereco", b =>
@@ -223,7 +225,7 @@ namespace Database.Migrations
 
                     b.HasIndex("CurriculoId");
 
-                    b.ToTable("experiencia");
+                    b.ToTable("Experiencias");
                 });
 
             modelBuilder.Entity("Domain.Models.Pessoa", b =>

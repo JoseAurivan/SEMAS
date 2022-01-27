@@ -15,7 +15,11 @@ namespace Application
         public DbSet<CadastroCmas> Cadastros { get;}
         public DbSet<PessoaEndereco> PessoaEnderecos { get; }
         public DbSet<Entrega> Entregas { get; }
-        public DbSet<Auditoria> Auditorias { get;}
+        
+        
+        public DbSet<Curriculo> Curriculos { get; }
+        public DbSet<Experiencias> Experiencias { get; }
+        public DbSet<Certificado> Certificados { get; set; }
         Task SaveChangesAsync();
 
         EntityEntry<TEntity> Entry<TEntity>(TEntity entry) where TEntity: class;
