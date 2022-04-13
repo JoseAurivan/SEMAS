@@ -12,6 +12,6 @@ namespace Domain.Models
         public string NomeAgente { get; set; }
 
         public Unidade? Unidade { get; set; }
-        public CestaBasica CestaBasica { get; set; }
+        public virtual CestaBasica CestaBasica { get; set; }
     }
 }

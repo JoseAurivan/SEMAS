@@ -136,7 +136,8 @@ namespace CadastroHabCMAS.Controllers
                         viewModel.Sanitizacao = end.Result.Pessoa.ElementAt(0).Pessoa.CadastroCmas.Sanitizacao;
                         viewModel.Telefone = end.Result.Pessoa.ElementAt(0).Pessoa.Telefone;
                         viewModel.Rg = end.Result.Pessoa.ElementAt(0).Pessoa.Rg;
-                        viewModel.Entregas = (List<Entrega>)end.Result.Cesta.Entregas;
+                        //TODO lista de cestas
+                        // viewModel.Entregas = (List<Entrega>)end.Result.Cesta.Entregas;
 
                         return View(nameof(PV_Visualizar), viewModel);
                     }
@@ -292,7 +293,7 @@ namespace CadastroHabCMAS.Controllers
                         {
                             // Define um nome para o arquivo enviado incluindo o sufixo obtido de milissegundos
                             string nomeArquivo = "Usuario_arquivo_" + viewModel.IdPessoa + "_" +
-                                                 endereco.Pessoa.ElementAt(0).Pessoa.Nome;
+                                                 endereco.Pessoa.ElementAt(0).Pessoa.Cpf;
                             //verifica qual o tipo de arquivo : jpg, gif, png, pdf ou tmp
                             if (arquivo.FileName.Contains(".jpg"))
                                 nomeArquivo += ".jpg";
@@ -311,7 +312,7 @@ namespace CadastroHabCMAS.Controllers
                             using (var stream = new FileStream(caminho, FileMode.Create))
                             {
                                 await arquivo.CopyToAsync(stream);
-                                viewModel.Caminhos += caminho + "|";
+                                viewModel.Caminhos = caminho;
                             }
                         }
                     }

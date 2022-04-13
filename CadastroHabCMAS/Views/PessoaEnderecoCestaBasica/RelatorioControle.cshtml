@@ -2,6 +2,7 @@
 @model CadastroHabCMAS.ViewModel.CadastroCMASViewModels.RelatorioControleViewModel
 
 @{
+    //TODO corrigir cestas basicas
     Layout = "_LayoutEmpty";
 }
 
@@ -16,7 +17,6 @@
             width: 100%;
             padding: 10px;
         }
-
         table, th, td{
             margin: 5px;
             border: 1px solid black;
@@ -47,10 +47,10 @@
     <table>
         <tr>
             <td>Nº</td>
-            <td>Departamento</td>
             <td>Nome</td>
             <td>CPF</td>
             <td>RG</td>
+            <td>Departamento</td>
             <td>Data Entrega</td>
         </tr>
         @if (Model.PessoaEnderecos is not null)
@@ -63,35 +63,40 @@
                     {
                         @if (Model.PessoaEnderecos[i].Endereco.Cesta is not null)
                         {
-                            @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas is not null)
+                            @if (Model.PessoaEnderecos[i].Endereco.Cesta.Count > 0)
                             {
                                 <tr>
-                                    <td>@i</td>
-                                    <td>@Model.Unidade</td>
+                                    <td>@(i + 1)</td>
                                     <td>@Model.PessoaEnderecos[i].Pessoa.Nome</td>
                                     <td>@Model.PessoaEnderecos[i].Pessoa.Cpf</td>
                                     <td>@Model.PessoaEnderecos[i].Pessoa.Rg</td>
                                     <td>
-                                        @for (int j = 0; j < Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.Count; j++)
+                                        @foreach (var cesta in Model.PessoaEnderecos[i].Endereco.Cesta)
                                         {
-                                            @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).EntregaStatus == StatusEntrega.Entregue)
+                                            @foreach (var entrega in cesta.Entregas)
                                             {
-                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).NomeAgente
-                                                <b>:</b>
-                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega?.ToShortDateString()
-                                                <br>
+                                                @if (entrega.DataEntrega is not null)
+                                                {
+                                                    @entrega.Unidade
+                                                    <hr/>
+                                                }
                                             }
                                         }
-                                        @if (Model.PessoaEnderecos[i].Endereco.Cesta.Demandas is not null)
-                                        {
-                                            @Model.PessoaEnderecos[i].Endereco.Cesta.Demandas
-                                        }
-                                        else
-                                        {
-                                            <b>Demanda nao cadastrada</b>
-                                        }
-                                        <hr>
                                     </td>
+                                    <td>
+                                        @foreach (var cesta in Model.PessoaEnderecos[i].Endereco.Cesta)
+                                        {
+                                            @foreach (var entrega in cesta.Entregas)
+                                            {
+                                                @if (entrega.DataEntrega != null)
+                                                {
+                                                    @DateTime.ParseExact(entrega.DataEntrega.ToString(),"dd/MM/yyyy",null);
+                                                    <hr>
+                                                }
+                                            }
+                                        }
+                                    </td>
+
                                 </tr>
                             }
                         }

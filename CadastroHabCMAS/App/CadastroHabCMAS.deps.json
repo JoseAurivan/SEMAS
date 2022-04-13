@@ -34,6 +34,7 @@
       "CadastroHabCMAS/1.0.0": {
         "dependencies": {
           "Database": "1.0.0",
+          "MimeTypes": "2.3.0",
           "Serilog": "2.10.0",
           "Serilog.AspNetCore": "4.1.0",
           "Serilog.Settings.Configuration": "3.3.0",
@@ -723,6 +724,7 @@
           "Microsoft.NETCore.Platforms": "3.1.0"
         }
       },
+      "MimeTypes/2.3.0": {},
       "NETStandard.Library/1.6.1": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -3904,6 +3906,13 @@
       "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
+    },
+    "MimeTypes/2.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9nHKBvmqNebz9aaDZajm2smKXo1r0heXJaWRjAUx38V4TyRYrg8RO6xxUAiJHws9y3c8N4zIrmApdqJPpMZM4w==",
+      "path": "mimetypes/2.3.0",
+      "hashPath": "mimetypes.2.3.0.nupkg.sha512"
     },
     "NETStandard.Library/1.6.1": {
       "type": "package",

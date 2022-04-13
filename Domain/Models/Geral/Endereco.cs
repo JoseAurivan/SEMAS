@@ -9,11 +9,12 @@ namespace Domain.Models
         public Endereco()
         {
             Pessoa = new List<PessoaEndereco>();
+            Cesta = new List<CestaBasica>();
         }
 
         public int Id { get; set; }
         public virtual ICollection<PessoaEndereco> Pessoa { get; set; }
-        public CestaBasica Cesta { get; set; }
+        public virtual ICollection<CestaBasica> Cesta { get; set; }
         public string Estado { get; set; }
         public string Cidade { get; set; }
         public string Cep { get; set; }

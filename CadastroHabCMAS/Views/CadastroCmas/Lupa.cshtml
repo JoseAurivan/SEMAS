@@ -1,8 +1,10 @@
 ﻿@using System.Linq
 @using CadastroHabCMAS.Controllers
+@using Domain.Enums
 @model CadastroHabCMAS.ViewModel.CadastroCMASViewModels.LupaCadastradoViewModel
 
 @{
+    //TODO consertar cesta basica 
     ViewBag.Title = "Lupa";
     Layout = "_Layout";
 }
@@ -30,31 +32,73 @@
 <div class="form--cadastro">
     <p class="h4">Cadastros efetuados na SEMAS</p>
     <hr>
-
-    <div class="form-row">
-        <div class="col-md-3 mb-3">
-            <label for="validationTooltip01">CPF:</label>
-            <div class="input-group mb-3">
-                <input asp-for="PessoaEndereco.Pessoa.Cpf" readonly class="form-control">
+    
+    <form class="needs-validation" novalidate asp-action="Lupa">
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Quantidade:</label>
+                <div class="input-group mb-3">
+                    <input asp-for="CestaBasica.Quant" readonly class="form-control">
+                    <input asp-for="CestaBasica.Id" hidden readonly class="form-control">
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Numero de Meses:</label>
+                <div class="input-group mb-3">
+                    <input asp-for="CestaBasica.NumeroMeses" readonly class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <label for="validationTooltip01">NIS:</label>
-            <div class="input-group mb-3">
-                <input asp-for="PessoaEndereco.Pessoa.CadastroCmas.Nis" readonly class="form-control">
-            </div>
-        </div>
-    </div>
-    
-    <input asp-for="PessoaEndereco.Endereco.Cesta.Id" readonly class="form-control" id="cesta">
-    <div id="ToChange">
-        
-    </div>
-    
-    @section Scripts
+        @for (int i = 0; i < Model.Entregas.Count; i++)
         {
-            <script>
-                let urlPessoaEndereco;
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="validationTooltip01">Nome do Agente: </label>
+                    <div class="input-group mb-3">
+                        <input asp-for="Entregas[i].NomeAgente" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationTooltip01">Unidade: </label>
+                    <div class="input-group mb-3">
+                        <select asp-for="Entregas[i].Unidade" class="form-select">
+                            @foreach (var status in Enum.GetValues(typeof(Unidade)))
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationTooltip01">Status da Entrega: </label>
+                    <div class="input-group mb-3">
+                        <select asp-for="Entregas[i].EntregaStatus" class="form-select">
+                            @foreach (var status in Enum.GetValues(typeof(StatusEntrega)))
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="validationTooltip01">Data da Entrega: </label>
+                    <div class="input-group mb-3">
+                        <input type="date" asp-for="Entregas[i].DataEntrega" class="form-control">
+                        <input asp-for="Entregas[i].Id"  readonly class="form-control">
+                    </div>
+                </div>
+            </div>
+        }
+        <input class="btn  btn-outline-success" type="submit"/>
+        <input class="btn  btn-outline-warning" type="reset"/>
+    </form>
+
+    @section Scripts
+    {
+        <script>
+          /*      let urlPessoaEndereco;
                 function init(url) {
                     urlPessoaEndereco = url;    
                 }
@@ -77,7 +121,8 @@
                                $('#ToChange').html(response)                   
                         }
                     });    
-                }   
+                }   */
                 </script>
-        }
+    }
+
 </div>

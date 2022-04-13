@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using Application.Enums;
 using Application.Services.Interfaces;
@@ -120,28 +121,35 @@ namespace CadastroHabCMAS.Controllers
             return View();
         }
 
-        public IActionResult Lupa()
+        [Route("[controller]/{id:int}")]
+        public async Task<IActionResult> Lupa(int id)
         {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Lupa([Bind] EntregaViewModel entregaViewModel)
-        {
-            var result = await _pessoaEnderecoService.SearchForCestaBasica(entregaViewModel.CestaBasica.Id);
+            var result = await _pessoaEnderecoService.SearchForCestaBasica(id);
             if (result is ServiceResult<CestaBasica> resultado && resultado.Type == ServiceResultType.Success)
             {
-                CestaBasica cestaBasica = resultado.Result;
-                cestaBasica.Entregas = entregaViewModel.Entregas;
-                foreach (var ent in cestaBasica.Entregas)
-                {
-                    ent.CestaBasica = cestaBasica;
-                }
+                LupaCadastradoViewModel lupaViewModel = new LupaCadastradoViewModel();
+                lupaViewModel.CestaBasica = resultado.Result;
+                lupaViewModel.Entregas = (List<Entrega>) resultado.Result.Entregas;
+                return View(nameof(Lupa), lupaViewModel);
+            }
+            return LidarComErro(result, id, nameof(PV_ErroCadastro));
 
-                await _pessoaEnderecoService.UpdateCestaBasica(cestaBasica,User.Identity.Name);
+        }
+        
+        [HttpPost]
+        [Route("[controller]/{id:int}")]
+        public async Task<IActionResult> Lupa([Bind] LupaCadastradoViewModel lupaCadastradoViewModel)
+        {
+
+            var busca = await _pessoaEnderecoService.SearchForCestaBasica(lupaCadastradoViewModel.CestaBasica.Id);
+            if (busca is ServiceResult<CestaBasica> resultado && resultado.Type == ServiceResultType.Success)
+            {
+                resultado.Result.Entregas = lupaCadastradoViewModel.Entregas;
+                await _pessoaEnderecoService.UpdateCestaBasica(resultado.Result, User.Identity?.Name);
                 return View(nameof(Sucesso));
             }
 
-            return View();
+            return LidarComErro(busca,lupaCadastradoViewModel, nameof(PV_ErroCadastro));
         }
 
         public IActionResult PV_Lupa()
@@ -152,6 +160,7 @@ namespace CadastroHabCMAS.Controllers
         [HttpPost]
         public async Task<IActionResult> PV_Lupa(string CestaId)
         {
+            
             var result = await _pessoaEnderecoService.SearchForCestaBasica(int.Parse(CestaId));
             if (result is ServiceResult<CestaBasica> resultado && resultado.Type == ServiceResultType.Success)
             {
@@ -163,7 +172,16 @@ namespace CadastroHabCMAS.Controllers
             return LidarComErro(result, null, nameof(PV_ErroCadastro));
         }
 
-
+        public IActionResult DownloadFile(string caminho)
+        {
+            if (caminho == null) return NotFound();
+        
+            var net = new System.Net.WebClient();
+            var data = net.DownloadData(caminho);
+            var content = new MemoryStream(data);
+            var contentType = "APPLICATION/octet-stream";
+            return File(content, contentType, caminho);
+        }
 
     }
 }

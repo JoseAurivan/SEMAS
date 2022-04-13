@@ -411,20 +411,37 @@ namespace Application.Services
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
-
+                List<CestaBasica> cestaBasicas = new List<CestaBasica>();
                 foreach (var ent in entregas)
                 {
-                    var pessoa = _context.PessoaEnderecos
-                        .AsNoTracking()
-                        .Include(x => x.Pessoa)
-                        .ThenInclude(x => x.CadastroCmas)
-                        .Include(x => x.Endereco)
-                        .ThenInclude(x => x.Cesta)
-                        .ThenInclude(x => x.Entregas)
-                        .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
+                   
+                    
+                    //Lista a cesta basícas que contem entrega
+                    var cestasEnt = await _context.CestaBasicas
+                        .Where(c => c.Entregas.Contains(ent))
+                        .Include(c => c.Entregas)
                         .FirstOrDefaultAsync();
-                    if (pessoa is not null)
-                        pessoaEndereco.Add(pessoa.Result);
+                    
+                    //Adicionamos a cesta a lista
+                    cestaBasicas.Add(cestasEnt);
+                }
+                
+                cestaBasicas = cestaBasicas.Distinct().ToList();
+                
+                foreach (var cesta in cestaBasicas)
+                {
+                    //Lista a pessoa que possue a cesta
+                    var pessoa = await _context.PessoaEnderecos
+                        .Include(p => p.Pessoa)
+                        .Include(p => p.Endereco)
+                        .ThenInclude(e => e.Cesta)
+                        .ThenInclude(e => e.Entregas)
+                        .Where(p => p.Endereco.Cesta.Contains(cesta))
+                        .FirstOrDefaultAsync();
+
+                    //Adicionamos a pessoa a lista de pessoas
+                    if(pessoa is not null)
+                        pessoaEndereco.Add(pessoa);
                 }
 
                 if (pessoaEndereco.Count == 0)
@@ -467,19 +484,36 @@ namespace Application.Services
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
-
+                List<CestaBasica> cestaBasicas = new List<CestaBasica>();
                 foreach (var ent in entregas)
                 {
-                    var pessoa = await _context.PessoaEnderecos
-                        .AsNoTracking()
-                        .Include(x => x.Pessoa)
-                        .ThenInclude(x => x.CadastroCmas)
-                        .Include(x => x.Endereco)
-                        .ThenInclude(x => x.Cesta)
-                        .ThenInclude(x => x.Entregas)
-                        .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
+                   
+                    
+                    //Lista a cesta basícas que contem entrega
+                    var cestasEnt = await _context.CestaBasicas
+                        .Where(c => c.Entregas.Contains(ent))
+                        .Include(c => c.Entregas)
                         .FirstOrDefaultAsync();
-                    if (pessoa is not null)
+                    
+                    //Adicionamos a cesta a lista
+                    cestaBasicas.Add(cestasEnt);
+                }
+                
+                cestaBasicas = cestaBasicas.Distinct().ToList();
+                
+                foreach (var cesta in cestaBasicas)
+                {
+                    //Lista a pessoa que possue a cesta
+                    var pessoa = await _context.PessoaEnderecos
+                        .Include(p => p.Pessoa)
+                        .Include(p => p.Endereco)
+                        .ThenInclude(e => e.Cesta)
+                        .ThenInclude(e => e.Entregas)
+                        .Where(p => p.Endereco.Cesta.Contains(cesta))
+                        .FirstOrDefaultAsync();
+
+                    //Adicionamos a pessoa a lista de pessoas
+                    if(pessoa is not null)
                         pessoaEndereco.Add(pessoa);
                 }
 
@@ -499,7 +533,7 @@ namespace Application.Services
                     Result = pessoaEndereco.Distinct().ToList()
                 };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, nameof(UserService));
                 return new ServiceResult(ServiceResultType.InternalError)
@@ -515,27 +549,44 @@ namespace Application.Services
             {
                 var entregas = await _context.Entregas
                     .AsNoTracking()
-                    .Where(x => x.Unidade == unidade
-                                && x.DataEntrega.HasValue
+                    .Where(x => x.DataEntrega.HasValue
+                                && x.Unidade == unidade
                                 && x.DataEntrega.Value.Year == ano
                                 && x.EntregaStatus == StatusEntrega.Entregue)
                     .OrderBy(x => x.DataEntrega)
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
-
+                List<CestaBasica> cestaBasicas = new List<CestaBasica>();
                 foreach (var ent in entregas)
                 {
-                    var pessoa = await _context.PessoaEnderecos
-                        .AsNoTracking()
-                        .Include(x => x.Pessoa)
-                        .ThenInclude(x => x.CadastroCmas)
-                        .Include(x => x.Endereco)
-                        .ThenInclude(x => x.Cesta)
-                        .ThenInclude(x => x.Entregas)
-                        .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
+                   
+                    
+                    //Lista a cesta basícas que contem entrega
+                    var cestasEnt = await _context.CestaBasicas
+                        .Where(c => c.Entregas.Contains(ent))
+                        .Include(c => c.Entregas)
                         .FirstOrDefaultAsync();
-                    if (pessoa is not null)
+                    
+                    //Adicionamos a cesta a lista
+                    cestaBasicas.Add(cestasEnt);
+                }
+                
+                cestaBasicas = cestaBasicas.Distinct().ToList();
+                
+                foreach (var cesta in cestaBasicas)
+                {
+                    //Lista a pessoa que possue a cesta
+                    var pessoa = await _context.PessoaEnderecos
+                        .Include(p => p.Pessoa)
+                        .Include(p => p.Endereco)
+                        .ThenInclude(e => e.Cesta)
+                        .ThenInclude(e => e.Entregas)
+                        .Where(p => p.Endereco.Cesta.Contains(cesta))
+                        .FirstOrDefaultAsync();
+
+                    //Adicionamos a pessoa a lista de pessoas
+                    if(pessoa is not null)
                         pessoaEndereco.Add(pessoa);
                 }
 
@@ -571,28 +622,44 @@ namespace Application.Services
             {
                 var entregas = await _context.Entregas
                     .AsNoTracking()
-                    .Where(x =>x.DataEntrega.HasValue
+                    .Where(x => x.DataEntrega.HasValue
                                 && x.DataEntrega.Value.Year == ano
                                 && x.EntregaStatus == StatusEntrega.Entregue)
                     .OrderBy(x => x.DataEntrega)
                     .ToListAsync();
 
                 List<PessoaEndereco> pessoaEndereco = new List<PessoaEndereco>();
-
+                List<CestaBasica> cestaBasicas = new List<CestaBasica>();
                 foreach (var ent in entregas)
                 {
-                    var pessoa = await _context.PessoaEnderecos
-                        .AsNoTracking()
-                        .Include(x => x.Pessoa)
-                        .ThenInclude(x => x.CadastroCmas)
-                        .Include(x => x.Endereco)
-                        .ThenInclude(x => x.Cesta)
-                        .ThenInclude(x => x.Entregas)
-                        .Where(x => x.Endereco.Cesta.Entregas.Contains(ent))
+                   
+                    
+                    //Lista a cesta basícas que contem entrega
+                    var cestasEnt = await _context.CestaBasicas
+                        .Where(c => c.Entregas.Contains(ent))
+                        .Include(c => c.Entregas)
                         .FirstOrDefaultAsync();
-                   if (pessoa is not null)
+                    
+                    //Adicionamos a cesta a lista
+                    cestaBasicas.Add(cestasEnt);
+                }
+                
+                cestaBasicas = cestaBasicas.Distinct().ToList();
+                
+                foreach (var cesta in cestaBasicas)
+                {
+                    //Lista a pessoa que possue a cesta
+                    var pessoa = await _context.PessoaEnderecos
+                        .Include(p => p.Pessoa)
+                        .Include(p => p.Endereco)
+                        .ThenInclude(e => e.Cesta)
+                        .ThenInclude(e => e.Entregas)
+                        .Where(p => p.Endereco.Cesta.Contains(cesta))
+                        .FirstOrDefaultAsync();
+
+                    //Adicionamos a pessoa a lista de pessoas
+                    if(pessoa is not null)
                         pessoaEndereco.Add(pessoa);
-                  
                 }
 
                 if (pessoaEndereco.Count == 0)
@@ -606,7 +673,6 @@ namespace Application.Services
                     };
                 }
 
-               
                 return new ServiceResult<List<PessoaEndereco>>(ServiceResultType.Success)
                 {
                     Result = pessoaEndereco.Distinct().ToList()
@@ -682,8 +748,14 @@ namespace Application.Services
                 {
                     Messages = new[] { "Dados nulos" }
                 };
-
-            if (cestaBasica.Id == default) _context.CestaBasicas.Add(cestaBasica);
+            if(!endereco.Cesta.Contains(cestaBasica))
+                endereco.Cesta.Add(cestaBasica);
+            
+            if (cestaBasica.Id == default)
+            {
+                //cestaBasica.Endereco = endereco;
+                _context.CestaBasicas.Add(cestaBasica);
+            }
             else _context.Entry(cestaBasica).State = EntityState.Modified;
 
             foreach (var entrega in cestaBasica.Entregas)
@@ -692,8 +764,6 @@ namespace Application.Services
                 if (entrega.Id == default) _context.Entregas.Add(entrega);
                 else _context.Entry(entrega).State = EntityState.Modified;
             }
-
-            endereco.Cesta = cestaBasica;
 
             _context.Entry(endereco).State = EntityState.Modified;
             await _context.SaveChangesAsync();

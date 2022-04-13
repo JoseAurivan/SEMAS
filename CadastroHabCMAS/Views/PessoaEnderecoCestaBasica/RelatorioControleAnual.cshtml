@@ -3,6 +3,7 @@
 
 
 @{
+    //TODO corrigir cestas basica
     Layout = null;
 }
 
@@ -49,10 +50,10 @@
         <table>
             <tr>
                 <td>Nº</td>
-                <td>Departamento</td>
                 <td>Nome</td>
                 <td>CPF</td>
                 <td>RG</td>
+                <td>Departamento</td>
                 <td>Data Entrega</td>
             </tr>
             @if (Model.PessoaEnderecos != null)
@@ -63,39 +64,39 @@
                     {
                         @if (Model.PessoaEnderecos[i].Endereco.Cesta != null)
                         {
-                            @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas != null)
-                            {
-                                <tr>
-                                    <td>@i</td>
-                                    <td>@Model.Unidade</td>
-                                    <td>@Model.PessoaEnderecos[i].Pessoa.Nome</td>
-                                    <td>@Model.PessoaEnderecos[i].Pessoa.Cpf</td>
-                                    <td>@Model.PessoaEnderecos[i].Pessoa.Rg</td>
-                                    <td>
-                                        @for (int j = 0; j < Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.Count; j++)
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model.PessoaEnderecos[i].Pessoa.Nome</td>
+                                <td>@Model.PessoaEnderecos[i].Pessoa.Cpf</td>
+                                <td>@Model.PessoaEnderecos[i].Pessoa.Rg</td>
+                                <td>
+                                    @foreach (var cesta in Model.PessoaEnderecos[i].Endereco.Cesta)
+                                    {
+                                        @foreach (var entrega in cesta.Entregas)
                                         {
-                                            @if (Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).EntregaStatus == StatusEntrega.Entregue)
+                                            @if (entrega.DataEntrega is not null)
                                             {
-                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).NomeAgente
-                                                <b>:</b>
-                                                @Model.PessoaEnderecos[i].Endereco.Cesta.Entregas.ElementAt(j).DataEntrega?.ToShortDateString()
-                                                ;
-                                                <br>
+                                                @entrega.Unidade
+                                                <hr/>
+                                            }
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var cesta in Model.PessoaEnderecos[i].Endereco.Cesta)
+                                    {
+                                        @foreach (var entrega in cesta.Entregas)
+                                        {
+                                            @if (entrega.DataEntrega != null)
+                                            {
+                                                @DateTime.ParseExact(entrega.DataEntrega.ToString(),"dd/MM/yyyy",null);
                                                 <hr>
                                             }
                                         }
-                                        @if (Model.PessoaEnderecos[i].Endereco.Cesta.Demandas is not null)
-                                        {
-                                            @Model.PessoaEnderecos[i].Endereco.Cesta.Demandas
-                                        }
-                                        else
-                                        {
-                                            <b>Demanda nao cadastrada</b>
-                                        }
-                                        <hr>
-                                    </td>
-                                </tr>
-                            }
+                                    }
+                                </td>
+
+                            </tr>
                         }
                     }
                 }

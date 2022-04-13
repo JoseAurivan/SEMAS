@@ -98,6 +98,9 @@ namespace Database.Migrations
                     b.Property<bool?>("DeterminacaoJuridica")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("EnderecoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("NumeroMeses")
                         .HasColumnType("nvarchar(max)");
 
@@ -108,6 +111,8 @@ namespace Database.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EnderecoId");
 
                     b.ToTable("cestaBasica");
                 });
@@ -143,9 +148,6 @@ namespace Database.Migrations
                     b.Property<string>("Cep")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CestaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Cidade")
                         .HasColumnType("nvarchar(max)");
 
@@ -162,8 +164,6 @@ namespace Database.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CestaId");
 
                     b.ToTable("enderecos");
                 });
@@ -329,13 +329,13 @@ namespace Database.Migrations
                     b.Navigation("Curriculo");
                 });
 
-            modelBuilder.Entity("Domain.Models.Endereco", b =>
+            modelBuilder.Entity("Domain.Models.CestaBasica", b =>
                 {
-                    b.HasOne("Domain.Models.CestaBasica", "Cesta")
-                        .WithMany()
-                        .HasForeignKey("CestaId");
+                    b.HasOne("Domain.Models.Endereco", "Endereco")
+                        .WithMany("Cesta")
+                        .HasForeignKey("EnderecoId");
 
-                    b.Navigation("Cesta");
+                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("Domain.Models.Entrega", b =>
@@ -404,6 +404,8 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Domain.Models.Endereco", b =>
                 {
+                    b.Navigation("Cesta");
+
                     b.Navigation("Pessoa");
                 });
 

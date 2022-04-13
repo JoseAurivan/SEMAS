@@ -1,6 +1,7 @@
 ﻿@model CadastroHabCMAS.ViewModel.PessoaEnderecoViewModels.CpfEncontradoViewModel
 
 @{
+    //TODO consertar cesta basica
     Layout = null;
 }
 <b>CPF JÁ ENCONTRADO</b>
@@ -30,52 +31,47 @@
 </div>
 @if (Model.Endereco.Cesta is not null)
 {
-
     <div class="form-row">
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">Quantidade Cestas:</label>
             <div class="input-group mb-3">
-                <input type="text" asp-for="Endereco.Cesta.Quant" class="form-control" id="cpf" placeholder="Quantidade Cestas" aria-label="Recipient's username" readonly>
+                <input type="text" asp-for="Endereco.Cesta" class="form-control" id="cpf" placeholder="Quantidade Cestas" aria-label="Recipient's username" readonly>
             </div>
         </div>
         <div class="col-md-3 mb-3">
             <label for="validationTooltip01">Numero de Entregas das Cestas:</label>
             <div class="input-group mb-3">
-                <input type="text" asp-for="Endereco.Cesta.NumeroMeses" class="form-control" id="cpf" placeholder="Numero Entregas" aria-label="Recipient's username" readonly>
+                <input type="text" asp-for="Endereco.Cesta" class="form-control" id="cpf" placeholder="Numero Entregas" aria-label="Recipient's username" readonly>
             </div>
         </div>
     </div>
-    @if (Model.Endereco.Cesta.Entregas.Count > 0)
-    {
-        <p class="lead">Entregas</p>
-        @for (int j = 0; j < Model.Endereco.Cesta.Entregas.Count; j++)
-        {
-            <div class="form-row">
-                <div class="col-md-3 mb-3">
-                    <label for="validationTooltip01">Unidade da Entrega:</label>
-                    <div class="input-group mb-3">
-                        <input type="text" asp-for="Endereco.Cesta.Entregas.ElementAt(j).Unidade" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="validationTooltip01">Agente da Entrega:</label>
-                    <div class="input-group mb-3">
-                        <input type="text" asp-for="Endereco.Cesta.Entregas.ElementAt(j).NomeAgente" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="validationTooltip01">Data da Entrega:</label>
-                    <div class="input-group mb-3">
-                        <input type="date" asp-for="Endereco.Cesta.Entregas.ElementAt(j).DataEntrega" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="validationTooltip01">Status da Entrega:</label>
-                    <div class="input-group mb-3">
-                        <input type="text" asp-for="Endereco.Cesta.Entregas.ElementAt(j).EntregaStatus" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
-                    </div>
-                </div>
+
+    <p class="lead">Entregas</p>
+
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Unidade da Entrega:</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
             </div>
-        }
-    }
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Agente da Entrega:</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Data da Entrega:</label>
+            <div class="input-group mb-3">
+                <input type="date" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationTooltip01">Status da Entrega:</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="nis" placeholder="CPF" aria-label="Recipient's username" readonly>
+            </div>
+        </div>
+    </div>
 }

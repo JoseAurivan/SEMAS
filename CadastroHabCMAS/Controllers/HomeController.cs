@@ -75,14 +75,14 @@ namespace CadastroHabCMAS.Controllers
             var result = await _userService.LoginAsync(userLoginViewModel.Username, userLoginViewModel.Password);
             
             if (result.Type != ServiceResultType.Success)
-                return LidarComErro(result, userLoginViewModel, nameof(Index));
+                return LidarComErro(result, userLoginViewModel, nameof(Painel));
             
             if (result is ServiceResult<User> resultado)
             {
                 if (resultado.Result.Roles != null) userLoginViewModel.Role = (Roles) resultado.Result.Roles;
             }
             else
-                return LidarComErro(result, userLoginViewModel, nameof(Index));
+                return LidarComErro(result, userLoginViewModel, nameof(Painel));
 
                 
             //TODO remodelar esse sistema
@@ -188,13 +188,12 @@ namespace CadastroHabCMAS.Controllers
                     var user = resultado.Result;
                     user.Password = userEditPasswordViewModel.NewPassword;
                     await _userService.Save(user);
-                    //TODO retornar feedback de sucesso
                     return View(nameof(Panel));
                 }
             }
             
             
-            //TODO tratar erros com mensagens amigáveis
+      
             return LidarComErro(result, userEditPasswordViewModel, nameof(MudarSenha));
         }
 
@@ -234,11 +233,10 @@ namespace CadastroHabCMAS.Controllers
                 var user = resultado.Result;
                 user.Email = userEditEmailViewModel.NewEmail;
                 await _userService.Save(user);
-                //TODO retornar feedback de sucesso
+
                 return View(nameof(Panel));
             }
-
-            //TODO tratar erros com mensagens amigáveis
+            
             return LidarComErro(task, userEditEmailViewModel, nameof(MudarEmail));
         }
 

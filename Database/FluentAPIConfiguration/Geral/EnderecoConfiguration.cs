@@ -8,7 +8,9 @@ namespace Database.FluentAPIConfiguration
     {
         public void Configure(EntityTypeBuilder<Endereco> builder)
         {
-            builder.ToTable("enderecos");
+            builder.ToTable("enderecos")
+                .HasMany(c => c.Cesta)
+                .WithOne(x => x.Endereco);
         }
     }
 }
