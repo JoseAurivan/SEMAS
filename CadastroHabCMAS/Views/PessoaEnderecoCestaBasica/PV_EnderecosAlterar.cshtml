@@ -29,6 +29,13 @@
             <div class="col-md-3 mb-3">
                 <input type="text" class="form-control" asp-for="PessoaEnderecos[i].Pessoa.Id" id="validationTooltip01" placeholder="Nome do Estado" hidden readonly>
             </div>
+            <div class="col-md-3 mb-3">
+                <label>Sexo:</label>
+                <select asp-for="PessoaEnderecos[i].Pessoa.Sexo" class="form-select" aria-label="Default select example">
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                </select>
+            </div>
         </div>
         <p class="lead">Altere o Endereco</p>
         <div class="form-row">

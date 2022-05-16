@@ -88,7 +88,8 @@
                                 {
                                     @if (entrega.DataEntrega != null)
                                     {
-                                        @DateTime.ParseExact(entrega.DataEntrega.ToString(),"dd/MM/yyyy",null);
+                                        @DateTime.Parse(entrega.DataEntrega.ToString(),
+                                            new CultureInfo("pt-BR"));
                                         <hr>
                                     }
                                 }

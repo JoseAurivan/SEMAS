@@ -11,6 +11,8 @@ namespace CadastroHabCMAS.ViewModel.EnderecoViewModels
         [Required(ErrorMessage = "O CPF inserido não é válido")]
         public List<PessoaEndereco> PessoaEnderecos { get; set; }
 
+        public Sexo Sexo { get; set; }
+
         public PessoaEndereco ToModel(Endereco endereco)
         {
             return new PessoaEndereco()

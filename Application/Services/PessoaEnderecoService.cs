@@ -687,6 +687,7 @@ namespace Application.Services
                 };
             }
         }
+        
 
         private async Task<ServiceResult> TryUpdateCestaBasica(CestaBasica cestaBasica, string? username)
         {

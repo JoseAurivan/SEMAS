@@ -1,8 +1,8 @@
-﻿@using Domain.Enums
+﻿@using System.Globalization
 @model CadastroHabCMAS.ViewModel.CadastroCMASViewModels.RelatorioControleViewModel
 
 @{
-    //TODO corrigir cestas basicas
+   
     Layout = "_LayoutEmpty";
 }
 
@@ -90,7 +90,8 @@
                                             {
                                                 @if (entrega.DataEntrega != null)
                                                 {
-                                                    @DateTime.ParseExact(entrega.DataEntrega.ToString(),"dd/MM/yyyy",null);
+                                                    @DateTime.Parse(entrega.DataEntrega.ToString(),
+                                                        new CultureInfo("pt-BR"));
                                                     <hr>
                                                 }
                                             }

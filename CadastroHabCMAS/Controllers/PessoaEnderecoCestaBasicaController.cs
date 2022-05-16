@@ -238,6 +238,7 @@ namespace CadastroHabCMAS.Controllers
                 if (result is ServiceResult<Pessoa> resultado && resultado.Type == ServiceResultType.Success)
                 {
                     var pessoa = alterar.Pessoa;
+                    pessoa.Sexo = alterar.Pessoa.Sexo;
                     pessoa.Id = resultado.Result.Id;
                     pessoa.Cpf = resultado.Result.Cpf;
                     var pessoaEndereco = enderecoAlterarViewModel.ToModel(alterar.Endereco);

@@ -48,7 +48,8 @@ namespace Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (optionsBuilder.IsConfigured) return;
-            optionsBuilder.UseSqlServer("Server=localhost,1473;Database=db_Servidor;User Id=sa;Password=1Secure*Password1;");
+            optionsBuilder.UseSqlServer("Server=localhost,1493;Database=db_Servidor;User Id=sa;Password=1Secure*Password1;" +
+                                        "Trusted_Connection=False; MultipleActiveResultSets=true");
         }
     }
 }
